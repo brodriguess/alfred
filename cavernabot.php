@@ -95,14 +95,14 @@ function processaMensagem($message, $alfred) {
             $mensagem = "São " . $time . " e " . date('i') . ", patrão {$user}";
         } else if (strpos(strtolower($msg), 'melhor bot') !== false) {
             $mensagem = "Melhor bot? Eu.";
-        } else if (strpos(strtolower($msg), 'tempo em') !== false) {
+        } else if (strpos(strtolower($msg), 'tempo em') !== false or strpos(strtolower($msg), 'tempo para') !== false) {
             /*
              * TEMPO
              * @bgastaldi
              */
             $city = preg_replace('/.*em ([^<]*).*/','$1',$msg);
             $temp = json_decode(getPage('http://api.openweathermap.org/data/2.5/weather?appid=e18cec2f10e6363e05aa8c43b4ae662a&units=metric&q='.$city.',br'), true);
-            $mensagem = (isset($temp['main']['temp'])) ? "Patrão {$user}, a temperatura em ".$city." está ".$temp['main']['temp']." °C" : "Desculpe patrão {$user}, não sei a onde fica essa cidade";
+            $mensagem = (isset($temp['main']['temp']) and isset($temp['sys']['country']) and $temp['sys']['country'] == "BR") ? "Patrão {$user}, a temperatura em ".$city." está ".$temp['main']['temp']." °C" : "Desculpe patrão {$user}, não sei a onde fica essa cidade";
         } else if (strtolower($intent[0]) == 'alfred') {
             $mensagem = "Pois não, patrão {$user}.";
         } else if ($intent[0] != '') {
