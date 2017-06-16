@@ -46,7 +46,7 @@ function processaMensagem($message, $alfred) {
             $return = getPage('http://aspiadas.com/randomjoke.php');
             preg_match_all('/<p>(([^.]|.)*?)<\/p>/', str_replace("<br />", "", utf8_encode($return)), $matches);
             echo $mensagem = (isset($matches[1][0])) ? $matches[1][0] : "Desculpe patrão {$user}, hoje não estou conseguindo contar piadas...";
-        } else if (substr(strtolower($intent[0]), 0, 6) == 'dolar' || substr($intent[0], 0, 7) == 'usd' || substr(strtolower($intent[0]), 0, 6) == 'dólar') {
+        } else if (substr(strtolower($intent[0]), 0, 5) == 'dolar' || substr($intent[0], 0, 3) == 'usd' || substr(strtolower($intent[0]), 0, 5) == 'dólar') {
             /*
              * COTACAO DO DOLAR
              * @bgastaldi
