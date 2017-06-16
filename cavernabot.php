@@ -4,21 +4,10 @@
 	define('API_URL',   'https://api.telegram.org/bot'.BOT_TOKEN.'/');
 
   // DEFINE CREDENCIAIS DA BASE DE DADOS
-  define('PG_HOST', 'ec2-23-21-246-11.compute-1.amazonaws.com');
-  define('PG_BASE', 'd2o47c69le02m8');
-  define('PG_USER', 'rgtulinbativmv');
-  define('PG_PORT', '5432');
-  define('PG_PASS', '712b6e54ac8e43ec9bbd73fd1cd5a2abbb6d63a4e5c681ea3beb695bfa94b284');
-  define('PG_PURI', 'postgres://rgtulinbativmv:712b6e54ac8e43ec9bbd73fd1cd5a2abbb6d63a4e5c681ea3beb695bfa94b284@ec2-23-21-246-11.compute-1.amazonaws.com:5432/d2o47c69le02m8');
-  define('PG_HCLI', 'heroku pg:psql postgresql-curved-30448 --app caverna-bot');
+  /* APAGADO */
 
-  define('CACHE', 'cache/');
 
 function processaMensagem($message, $alfred) {
-
-  /*$cachefile	= CACHE.'alfred.txt';
-  $cache = (!file_exists($cachefile))?:file($cachefile, FILE_IGNORE_NEW_LINES);
-  $pausado = file_get_contents($cache);*/
 
   $idchat  = $destino = $message['chat']['id'];
   $iduser  = $message['from']['id'];
@@ -113,9 +102,6 @@ function processaMensagem($message, $alfred) {
         $mensagem = "São ".$time." e ".date('i').", patrão {$user}";
     } else if (strpos(strtolower($msg), 'melhor bot') !== false){
         $mensagem = "Melhor bot? Eu.";
-
-  /*  } else if (strpos(strtolower($msg), 'retire-se') !== false){
-      file_put_contents($cachefile, "pause");*/
     } else if ($intent[0] == ''){
       $mensagem = "Pois não, patrão {$user}.";
     } else if ($intent[0] != ''){
