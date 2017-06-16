@@ -100,7 +100,8 @@ function processaMensagem($message, $alfred) {
              * TEMPO
              * @bgastaldi
              */
-            $city = preg_replace('/.*em ([^<]*).*/','$1',$msg);
+            $txt = (strpos(strtolower($msg), 'tempo em') !== false) ? "em" : "para";
+            $city = preg_replace('/.*'.$txt.' ([^<]*).*/','$1',$msg);
             $temp = json_decode(getPage('http://api.openweathermap.org/data/2.5/weather?appid=e18cec2f10e6363e05aa8c43b4ae662a&units=metric&q='.$city.',br'), true);
             $mensagem = (isset($temp['main']['temp']) and isset($temp['sys']['country']) and $temp['sys']['country'] == "BR") ? "Patrão {$user}, a temperatura em ".$city." está ".$temp['main']['temp']." °C" : "Desculpe patrão {$user}, não sei a onde fica essa cidade";
         } else if (strtolower($intent[0]) == 'alfred') {
