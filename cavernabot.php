@@ -52,7 +52,7 @@ function processaMensagem($message, $alfred) {
              * @bgastaldi
              */
             $dolar = json_decode(getPage('http://api.promasters.net.br/cotacao/v1/valores?moedas=USD&alt=json'), true);
-            $mensagem = isset($dolar['valores']['USD']['valor']) ? "Patrão {$user}, o valor do dolar agora é R$ ".round($dolar['valores']['USD']['valor'],2)."." : "Desculpe patrão {$user}, ainda não li o jornal hoje!";
+            $mensagem = isset($dolar['valores']['USD']['valor']) ? "Patrão {$user}, o valor do dolar agora é R$ " . number_format($dolar['valores']['USD']['valor'], 2, ',', '.') . "." : "Desculpe patrão {$user}, ainda não li o jornal hoje!";
         } else if (substr(strtolower($intent[0]), 0, 6) == 'batman' || substr($intent[0], 0, 7) == 'bat-man') {
             $mensagem = "Não conheço nenhum Batman. Apenas trabalho aqui.";
         } else if (substr(strtolower($intent[0]), 0, 4) == 'time' || substr($intent[0], 0, 7) == 'futebol') {
