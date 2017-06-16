@@ -109,7 +109,7 @@ function processaMensagem($message, $alfred) {
     }
     $replymarkup = false;
     if(!empty($image)){
-        enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $destino, 'disable_web_page_preview' => true, 'video' => $image));
+        enviaResposta("sendPhoto", array('parse_mode' => 'HTML', 'chat_id' => $destino, 'disable_web_page_preview' => true, 'photo' => $image));
     }else if ($mensagem != "") {
         if ($replymarkup) {
             enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $destino, 'disable_web_page_preview' => true, 'text' => $mensagem, 'reply_markup' => $replymarkup));
