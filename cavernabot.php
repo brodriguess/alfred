@@ -50,7 +50,7 @@ function processaMensagem($message, $alfred) {
              * PIADAS DINAMICAS 
              * @bgastaldi
              */
-            if(strpos($palavras, "não") === false and strpos($palavras, "não") === false){
+            if(strpos($palavras, "nao") === false and strpos($palavras, "não") === false){
                 $return = getPage('http://aspiadas.com/randomjoke.php');
                 preg_match_all('/<p>(([^.]|.)*?)<\/p>/', str_replace("<br />", "", utf8_encode($return)), $matches);
                 $mensagem = (isset($matches[1][0])) ? $matches[1][0] : "Desculpe patrão {$user}, hoje não estou conseguindo contar piadas...";
