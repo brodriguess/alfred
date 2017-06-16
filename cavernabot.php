@@ -1,4 +1,6 @@
 <?php
+
+
 /*
  * DEFINE TOKEN E API
  */
@@ -48,9 +50,13 @@ function processaMensagem($message, $alfred) {
              * PIADAS DINAMICAS 
              * @bgastaldi
              */
-              $return = getPage('http://aspiadas.com/randomjoke.php');
-              preg_match_all('/<p>(([^.]|.)*?)<\/p>/', str_replace("<br />", "", utf8_encode($return)), $matches);
-              $mensagem = (isset($matches[1][0])) ? $matches[1][0] : "Desculpe patrão {$user}, hoje não estou conseguindo contar piadas...";
+            if(strpos($palavras, "nao") === false or strpos($palavras, "não") === false){
+                $return = getPage('http://aspiadas.com/randomjoke.php');
+                preg_match_all('/<p>(([^.]|.)*?)<\/p>/', str_replace("<br />", "", utf8_encode($return)), $matches);
+                $mensagem = (isset($matches[1][0])) ? $matches[1][0] : "Desculpe patrão {$user}, hoje não estou conseguindo contar piadas...";
+            }else{
+                $mensagem = "Ok patrão {$user}, não vou contar.";
+            }
         } else if (substr(strtolower($intent[0]), 0, 4) == 'euro' || substr(strtolower($intent[0]), 0, 5) == 'dolar' || substr($intent[0], 0, 3) == 'usd' || substr(strtolower($intent[0]), 0, 7) == 'dólar') {
             /*
              * COTACAO DO DOLAR
@@ -109,7 +115,7 @@ function processaMensagem($message, $alfred) {
     }
     $replymarkup = false;
     if(!empty($image)){
-        enviaResposta("sendPhoto", array('parse_mode' => 'HTML', 'chat_id' => $destino, 'disable_web_page_preview' => true, 'photo' => $image));
+        enviaResposta("sendPhoto", array('chat_id' => $destino, 'photo' => $image));
     }else if ($mensagem != "") {
         if ($replymarkup) {
             enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $destino, 'disable_web_page_preview' => true, 'text' => $mensagem, 'reply_markup' => $replymarkup));
