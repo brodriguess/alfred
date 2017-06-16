@@ -16,6 +16,7 @@ function processaMensagem($message, $alfred) {
     $sintaxe = preg_split("/\s+/", strtolower($msg), 2);
     $comando = substr(str_ireplace("@cavernabot", "", $sintaxe[0]), 1);
     $criterio = $sintaxe[1];
+    $image = null;
 
     if ($comando == "perguntasf" || $comando == "faq") {
         $mensagem = "<b>O que são ChatBots?</b>\nChatbot (ou chatterbot) é um programa de computador que tenta simular um ser humano na conversação com as pessoas. O objetivo é responder as perguntas de tal forma que as pessoas tenham a impressão de estar conversando com outra pessoa e não com um programa de computador. Após o envio de perguntas em linguagem natural, o programa consulta uma base de conhecimento e em seguida fornece uma resposta que tenta imitar o comportamento humano. (<a href='https://pt.wikipedia.org/wiki/Chatterbot'>Wikipedia</a>) ";
@@ -34,7 +35,7 @@ function processaMensagem($message, $alfred) {
             $periodo = 'noite';
         }
         $palavras = preg_split("/\s+/", $criterio);
-        $intent = array_values(preg_grep("(^piada(.)?$|^batman(.)?$|^bat-man(.)?$|^profissão(.)?$|^futebol(.)?$|^time(.)?$|^raiz(.)?$|^quadrada(.)?$|^d(o|ó|ó)lar(.)?$|^euro(.)?$|^hora(.)?$|^data(.)?$)", $palavras));
+        $intent = array_values(preg_grep("(^piada(.)?$|^batman(.)?$|^bat-man(.)?$|^profissão(.)?$|^futebol(.)?$|^time(.)?$|^raiz(.)?$|^quadrada(.)?$|^d(o|ó|ó)lar(.)?$|^euro(.)?$|^hora(.)?$|^data(.)?$|^alfred(.)?$)", $palavras));
         
         /*
          * HORA 
@@ -49,7 +50,7 @@ function processaMensagem($message, $alfred) {
              * PIADAS DINAMICAS 
              * @bgastaldi
              */
-            if(strpos($palavras, "não") !== false and strpos($palavras, "não") !== false){
+            if(strpos($palavras, "não") === false and strpos($palavras, "não") === false){
                 $return = getPage('http://aspiadas.com/randomjoke.php');
                 preg_match_all('/<p>(([^.]|.)*?)<\/p>/', str_replace("<br />", "", utf8_encode($return)), $matches);
                 $mensagem = (isset($matches[1][0])) ? $matches[1][0] : "Desculpe patrão {$user}, hoje não estou conseguindo contar piadas...";
@@ -104,6 +105,8 @@ function processaMensagem($message, $alfred) {
             $city = preg_replace('/.*'.$txt.' ([^<]*).*/','$1',$msg);
             $temp = json_decode(getPage('http://api.openweathermap.org/data/2.5/weather?appid=e18cec2f10e6363e05aa8c43b4ae662a&units=metric&q='.$city.',br'), true);
             $mensagem = (isset($temp['main']['temp']) and isset($temp['sys']['country']) and $temp['sys']['country'] == "BR") ? "Patrão {$user}, a temperatura em ".$city." está ".$temp['main']['temp']." °C" : "Desculpe patrão {$user}, não sei a onde fica essa cidade";
+        } else if (strpos(strtolower($msg), 'manda nude') !== false) {
+            $image = "http://i.imgur.com/8q3GqXL.jpg";
         } else if (strtolower($intent[0]) == 'alfred') {
             $mensagem = "Pois não, patrão {$user}.";
         } else if ($intent[0] != '') {
@@ -111,7 +114,9 @@ function processaMensagem($message, $alfred) {
         }
     }
     $replymarkup = false;
-    if ($mensagem != "") {
+    if(!empty($image)){
+        enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $destino, 'disable_web_page_preview' => true, 'photo' => $image));
+    }else if ($mensagem != "") {
         if ($replymarkup) {
             enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $destino, 'disable_web_page_preview' => true, 'text' => $mensagem, 'reply_markup' => $replymarkup));
         } else {
