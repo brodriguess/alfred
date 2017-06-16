@@ -120,8 +120,6 @@ function processaMensagem($message, $alfred) {
         } else if ($intent[0] != '') {
             $mensagem = "Não entendi, patrão {$user}.";
         }
-        $array = print_r($intent);
-        enviaResposta("sendMessage", array('parse_mode' => 'HTML','chat_id' => '220905337','disable_web_page_preview' => true,'text' => $intent . ', ' . $msg));
     }
     $replymarkup = false;
     if ($mensagem != "") {
