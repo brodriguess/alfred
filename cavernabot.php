@@ -33,7 +33,7 @@ function processaMensagem($message, $alfred) {
             $periodo = 'noite';
         }
         $palavras = preg_split("/\s+/", $criterio);
-        $intent = array_values(preg_grep("(^piada(.)?$|^batman(.)?$|^bat-man(.)?$|^profissão(.)?$|^futebol(.)?$|^time(.)?$|^raiz(.)?$|^quadrada(.)?$|^dolar(.)?$)", $palavras));
+        $intent = array_values(preg_grep("(^piada(.)?$|^batman(.)?$|^bat-man(.)?$|^profissão(.)?$|^futebol(.)?$|^time(.)?$|^raiz(.)?$|^quadrada(.)?$|^d(o|ó)lar(.)?$)", $palavras));
 
         /*
          * PIADAS
