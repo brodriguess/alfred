@@ -48,7 +48,7 @@ function processaMensagem($message, $alfred) {
                 preg_match_all('/<p>(([^.]|.)*?)<\/p>/', str_replace("<br />", "", utf8_encode($return)), $matches);
                 echo $mensagem = (isset($matches[1][0])) ? $matches[1][0] : "Desculpe patrão {$user}, hoje não estou conseguindo contar piadas...";
             }else{
-                echo $mensagem = "Ok patrão, não vou contar";
+                echo $mensagem = "Ok patrão {$user}, não vou contar.";
             }
         } else if (substr(strtolower($intent[0]), 0, 4) == 'euro' || substr(strtolower($intent[0]), 0, 5) == 'dolar' || substr($intent[0], 0, 3) == 'usd' || substr(strtolower($intent[0]), 0, 5) == 'dólar') {
             /*
@@ -57,7 +57,7 @@ function processaMensagem($message, $alfred) {
              */
             $moeda = (substr(strtolower($intent[0]), 0, 4) == 'euro') ? 'EUR' : 'USD';
             $dolar = json_decode(getPage('http://api.promasters.net.br/cotacao/v1/valores?moedas='.$moeda.'&alt=json'), true);
-            $mensagem = isset($dolar['valores']['USD']['valor']) ? "Patrão {$user}, o valor do ".$intent[0]." agora é R$ " . number_format($dolar['valores']['USD']['valor'], 2, ',', '.') . "." : "Desculpe patrão {$user}, ainda não li o jornal hoje!";
+            $mensagem = isset($dolar['valores'][$moeda]['valor']) ? "Patrão {$user}, o valor do ".$intent[0]." agora é R$ " . number_format($dolar['valores']['USD']['valor'], 2, ',', '.') . "." : "Desculpe patrão {$user}, ainda não li o jornal hoje!";
         } else if (substr(strtolower($intent[0]), 0, 6) == 'batman' || substr($intent[0], 0, 7) == 'bat-man') {
             $mensagem = "Não conheço nenhum Batman. Apenas trabalho aqui.";
         } else if (substr(strtolower($intent[0]), 0, 4) == 'time' || substr($intent[0], 0, 7) == 'futebol') {
@@ -89,7 +89,7 @@ function processaMensagem($message, $alfred) {
             $mensagem = "São " . $time . " e " . date('i') . ", patrão {$user}";
         } else if (strpos(strtolower($msg), 'melhor bot') !== false) {
             $mensagem = "Melhor bot? Eu.";
-        } else if ($intent[0] == '') {
+        } else if (strtolower($intent[0]) == 'alfred') {
             $mensagem = "Pois não, patrão {$user}.";
         } else if ($intent[0] != '') {
             $mensagem = "Não entendi, patrão {$user}.";
