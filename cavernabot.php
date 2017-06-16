@@ -1,5 +1,6 @@
 <?php
 
+
 /*
  * DEFINE TOKEN E API
  */
@@ -36,7 +37,7 @@ function processaMensagem($message, $alfred) {
         $intent = array_values(preg_grep("(^piada(.)?$|^batman(.)?$|^bat-man(.)?$|^profissão(.)?$|^futebol(.)?$|^time(.)?$|^raiz(.)?$|^quadrada(.)?$|^d(o|ó|ó)lar(.)?$|^euro(.)?$|^hora(.)?$|^data(.)?$)", $palavras));
         
         /*
-         * HORA
+         * HORA 
          * @bgastaldi
          */
         if (substr($intent[0], 0, 4) == 'hora') {
@@ -48,13 +49,13 @@ function processaMensagem($message, $alfred) {
              * PIADAS DINAMICAS 
              * @bgastaldi
              */
-            //if(strpos($palavras, "não") === false){
+            if(strpos($palavras, "não") !== false and strpos($palavras, "não") !== false){
                 $return = getPage('http://aspiadas.com/randomjoke.php');
                 preg_match_all('/<p>(([^.]|.)*?)<\/p>/', str_replace("<br />", "", utf8_encode($return)), $matches);
                 $mensagem = (isset($matches[1][0])) ? $matches[1][0] : "Desculpe patrão {$user}, hoje não estou conseguindo contar piadas...";
-            //}else{
-              //  $mensagem = "Ok patrão {$user}, não vou contar.";
-            //}
+            }else{
+                $mensagem = "Ok patrão {$user}, não vou contar.";
+            }
         } else if (substr(strtolower($intent[0]), 0, 4) == 'euro' || substr(strtolower($intent[0]), 0, 5) == 'dolar' || substr($intent[0], 0, 3) == 'usd' || substr(strtolower($intent[0]), 0, 7) == 'dólar') {
             /*
              * COTACAO DO DOLAR
@@ -94,6 +95,14 @@ function processaMensagem($message, $alfred) {
             $mensagem = "São " . $time . " e " . date('i') . ", patrão {$user}";
         } else if (strpos(strtolower($msg), 'melhor bot') !== false) {
             $mensagem = "Melhor bot? Eu.";
+        } else if (strpos(strtolower($msg), 'tempo em') !== false) {
+            /*
+             * TEMPO
+             * @bgastaldi
+             */
+            $city = preg_replace('/.*em ([^<]*).*/','$1',$msg);
+            $temp = json_decode(getPage('http://api.openweathermap.org/data/2.5/weather?appid=e18cec2f10e6363e05aa8c43b4ae662a&units=metric&q='.$city.',br'), true);
+            $mensagem = (isset($temp['main']['temp'])) ? "Patrão {$user}, a temperatura em ".$city." está ".$temp['main']['temp']." °C" : "Desculpe patrão {$user}, não sei a onde fica essa cidade";
         } else if (strtolower($intent[0]) == 'alfred') {
             $mensagem = "Pois não, patrão {$user}.";
         } else if ($intent[0] != '') {
