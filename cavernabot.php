@@ -50,13 +50,9 @@ function processaMensagem($message, $alfred) {
              * PIADAS DINAMICAS 
              * @bgastaldi
              */
-            if(strpos($palavras, "nao") === false or strpos($palavras, "não") === false){
-                $return = getPage('http://aspiadas.com/randomjoke.php');
-                preg_match_all('/<p>(([^.]|.)*?)<\/p>/', str_replace("<br />", "", utf8_encode($return)), $matches);
-                $mensagem = (isset($matches[1][0])) ? $matches[1][0] : "Desculpe patrão {$user}, hoje não estou conseguindo contar piadas...";
-            }else{
-                $mensagem = "Ok patrão {$user}, não vou contar.";
-            }
+            $return = getPage('http://aspiadas.com/randomjoke.php');
+            preg_match_all('/<p>(([^.]|.)*?)<\/p>/', str_replace("<br />", "", utf8_encode($return)), $matches);
+            $mensagem = (isset($matches[1][0])) ? $matches[1][0] : "Desculpe patrão {$user}, hoje não estou conseguindo contar piadas...";
         } else if (substr(strtolower($intent[0]), 0, 4) == 'euro' || substr(strtolower($intent[0]), 0, 5) == 'dolar' || substr($intent[0], 0, 3) == 'usd' || substr(strtolower($intent[0]), 0, 7) == 'dólar') {
             /*
              * COTACAO DO DOLAR
