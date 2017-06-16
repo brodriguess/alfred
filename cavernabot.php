@@ -33,12 +33,17 @@ function processaMensagem($message, $alfred) {
             $periodo = 'noite';
         }
         $palavras = preg_split("/\s+/", $criterio);
-        $intent = array_values(preg_grep("(^piada(.)?$|^batman(.)?$|^bat-man(.)?$|^profissão(.)?$|^futebol(.)?$|^time(.)?$|^raiz(.)?$|^quadrada(.)?$|^d(o|ó|ó)lar(.)?$|^euro(.)?$)", $palavras));
-
+        $intent = array_values(preg_grep("(^piada(.)?$|^batman(.)?$|^bat-man(.)?$|^profissão(.)?$|^futebol(.)?$|^time(.)?$|^raiz(.)?$|^quadrada(.)?$|^d(o|ó|ó)lar(.)?$|^euro(.)?$|^hora(.)?$|^data(.)?$)", $palavras));
+        
         /*
-         * PIADAS
+         * HORA
+         * @bgastaldi
          */
-        if (substr($intent[0], 0, 5) == 'piada') {
+        if (substr($intent[0], 0, 4) == 'hora') {
+            $mensagem = "Patrão {$user}, agora são ".date("H:i:s",strtotime('-3 hours'));
+        }elseif (substr($intent[0], 0, 4) == 'data') {
+            $mensagem = "Patrão {$user}, hoje é dia ".date("d/m/Y",strtotime('-3 hours'));
+        }else if (substr($intent[0], 0, 5) == 'piada') {
             /*
              * PIADAS DINAMICAS 
              * @bgastaldi
@@ -46,9 +51,9 @@ function processaMensagem($message, $alfred) {
             if(strpos($palavras, "nao") === false or strpos($palavras, "não") === false){
                 $return = getPage('http://aspiadas.com/randomjoke.php');
                 preg_match_all('/<p>(([^.]|.)*?)<\/p>/', str_replace("<br />", "", utf8_encode($return)), $matches);
-                echo $mensagem = (isset($matches[1][0])) ? $matches[1][0] : "Desculpe patrão {$user}, hoje não estou conseguindo contar piadas...";
+                $mensagem = (isset($matches[1][0])) ? $matches[1][0] : "Desculpe patrão {$user}, hoje não estou conseguindo contar piadas...";
             }else{
-                echo $mensagem = "Ok patrão {$user}, não vou contar.";
+                $mensagem = "Ok patrão {$user}, não vou contar.";
             }
         } else if (substr(strtolower($intent[0]), 0, 4) == 'euro' || substr(strtolower($intent[0]), 0, 5) == 'dolar' || substr($intent[0], 0, 3) == 'usd' || substr(strtolower($intent[0]), 0, 5) == 'dólar') {
             /*
@@ -57,7 +62,7 @@ function processaMensagem($message, $alfred) {
              */
             $moeda = (substr(strtolower($intent[0]), 0, 4) == 'euro') ? 'EUR' : 'USD';
             $dolar = json_decode(getPage('http://api.promasters.net.br/cotacao/v1/valores?moedas='.$moeda.'&alt=json'), true);
-            $mensagem = isset($dolar['valores'][$moeda]['valor']) ? "Patrão {$user}, o valor do ".$intent[0]." agora é R$ " . number_format($dolar['valores']['USD']['valor'], 2, ',', '.') . "." : "Desculpe patrão {$user}, ainda não li o jornal hoje!";
+            $mensagem = isset($dolar['valores'][$moeda]['valor']) ? "Patrão {$user}, o valor do ".$intent[0]." agora é R$ " . number_format($dolar['valores'][$moeda]['valor'], 2, ',', '.') . "." : "Desculpe patrão {$user}, ainda não li o jornal hoje!";
         } else if (substr(strtolower($intent[0]), 0, 6) == 'batman' || substr($intent[0], 0, 7) == 'bat-man') {
             $mensagem = "Não conheço nenhum Batman. Apenas trabalho aqui.";
         } else if (substr(strtolower($intent[0]), 0, 4) == 'time' || substr($intent[0], 0, 7) == 'futebol') {
