@@ -1,9 +1,11 @@
 <?php
+
 /*
  * DEFINE TOKEN E API
  */
 define('BOT_TOKEN', '347712677:AAEaX0w4Hmc2oR_QY3911_YF8ixSX8mV2y8');
 define('API_URL', 'https://api.telegram.org/bot' . BOT_TOKEN . '/');
+
 
 function processaMensagem($message, $alfred) {
     $idchat = $destino = $message['chat']['id'];
@@ -15,94 +17,164 @@ function processaMensagem($message, $alfred) {
     $comando = substr(str_ireplace("@cavernabot", "", $sintaxe[0]), 1);
     $criterio = $sintaxe[1];
     $image = null;
-
     if ($comando == "perguntasf" || $comando == "faq") {
         $mensagem = "<b>O que são ChatBots?</b>\nChatbot (ou chatterbot) é um programa de computador que tenta simular um ser humano na conversação com as pessoas. O objetivo é responder as perguntas de tal forma que as pessoas tenham a impressão de estar conversando com outra pessoa e não com um programa de computador. Após o envio de perguntas em linguagem natural, o programa consulta uma base de conhecimento e em seguida fornece uma resposta que tenta imitar o comportamento humano. (<a href='https://pt.wikipedia.org/wiki/Chatterbot'>Wikipedia</a>) ";
     }
     if ($comando == "link" || $comando == "linksuteis") {
         $mensagem = "<b>LINKS ÚTEIS:</b>\nComunidade no Medium:\nhttps://medium.com/botsbrasil\nLista de bots brasileiros:\nhttp://www.botsbrasil.com.br/\nFormulário para adicionar um chatbot na lista do Bots Brasil:\nhttps://botsbrasil.typeform.com/to/Y4fLU8\nNão sabe o que é chatbot?\nhttps://medium.com/botsbrasil/o-que-%C3%A9-um-chatbot-7fa2897eac5d#.yuq1q9v0s\nSe quiser participar da comunidade do ChatBot Brasil é só entrar no grupo:\nhttps://www.facebook.com/groups/chatbotbrasil/?fref=ts \nChatbot Pernambuco:\nhttps://www.facebook.com/groups/247260785715123/\n\nCríticas e sugestões serão sempre bem vindas e faz a comunidade evoluir.\nQualquer dúvida é só falar.";
     }
-
+    /*
+     * ATIVANDO BOT
+     */
     if ($alfred == true) {
-        $time = date("H", strtotime('-3 hours'));
-        if ($time < "12") {
-            $periodo = 'manhã';
-        } else if ($time >= "12" && $time < "18") {
-            $periodo = 'tarde';
-        } else if ($time >= "18") {
-            $periodo = 'noite';
-        }
-        $palavras = preg_split("/\s|(?<=\w)(?=[.,:;!?)])|(?<=[.,!()?\x{201C}])/u", $criterio, -1, PREG_SPLIT_NO_EMPTY);
+        
+        /*
+         * SALVANDO O LOG
+         */
+        logRobots("log.txt", $msg);
+        /*
+         * INTENTS
+         */
+        $palavras = preg_split("/\s|(?<=\w)(?=[.,:;!?)])|(?<=[.,!()?\x{201C}])/u", removeAC($criterio), -1, PREG_SPLIT_NO_EMPTY);
         $intent = array_values(preg_grep("(^piada(.)?$|^batman(.)?$|^bat-man(.)?$|^profissão(.)?$|^futebol(.)?$|^time(.)?$|^raiz(.)?$|^quadrada(.)?$|^d(o|ó|ó)lar(.)?$|^euro(.)?$|^hora(.)?$|^data(.)?$|^alfred(.)?$)", $palavras));
         
         /*
-         * HORA 
-         * @bgastaldi
+         * AÇÕES
          */
         if (substr($intent[0], 0, 4) == 'hora') {
-            $mensagem = "Patrão {$user}, agora são ".date("H:i:s",strtotime('-3 hours'));
+            /*
+             * HORA
+             */
+            $hora = date("H:i:s",strtotime('-3 hours'));
+            $arrayMensagem = array(
+                "Patrão {$user}, agora são {$hora}",
+                "São {$hora}, patrão {$user}",
+                "Claro! Agora são {$hora}, patrão {$user}"       
+            );
+            $mensagem = $arrayMensagem[array_rand($arrayMensagem, 1)];
         }elseif (substr($intent[0], 0, 4) == 'data') {
-            $mensagem = "Patrão {$user}, hoje é dia ".date("d/m/Y",strtotime('-3 hours'));
+            /*
+             * DATA
+             */
+            $data = date("d/m/Y",strtotime('-3 hours'));
+            $arrayMensagem = array(
+                "Patrão {$user}, hoje é dia {$data}",
+                "É dia {$data}, patrão {$user}",
+                "Dia {$data}, patrão {$user}"       
+            );
+            $mensagem = $arrayMensagem[array_rand($arrayMensagem, 1)];
         }else if (substr($intent[0], 0, 5) == 'piada') {
             /*
              * PIADAS DINAMICAS 
-             * @bgastaldi
              */
-            $return = getPage('http://aspiadas.com/randomjoke.php');
-            preg_match_all('/<p>(([^.]|.)*?)<\/p>/', str_replace("<br />", "", utf8_encode($return)), $matches);
-            $mensagem = (isset($matches[1][0])) ? $matches[1][0] : "Desculpe patrão {$user}, hoje não estou conseguindo contar piadas...";
-        } else if (substr(strtolower($intent[0]), 0, 4) == 'euro' || substr(strtolower($intent[0]), 0, 5) == 'dolar' || substr($intent[0], 0, 3) == 'usd' || substr(strtolower($intent[0]), 0, 7) == 'dólar') {
+            if(strpos(removeAC(strtolower($msg)), "nao") !== false){
+                $arrayMensagem = array(
+                    "OK patrão {$user}, não vou contar",
+                    "Claro patrão {$user}, se precisar de alguma coisa me avise",
+                    "Hum, não está gostando das minhas piadas?! Desculpe patrão {$user}"       
+                );
+                $mensagem = $arrayMensagem[array_rand($arrayMensagem, 1)];
+            }else{
+                $return = getPage('http://aspiadas.com/randomjoke.php');
+                preg_match_all('/<p>(([^.]|.)*?)<\/p>/', str_replace("<br />", "", utf8_encode($return)), $matches);
+                $mensagem = (isset($matches[1][0])) ? $matches[1][0] : "Desculpe patrão {$user}, hoje não estou conseguindo contar piadas...";
+            }
+        } else if (substr(strtolower($intent[0]), 0, 4) == 'euro' || substr(strtolower($intent[0]), 0, 5) == 'dolar') {
             /*
              * COTACAO DO DOLAR
-             * @bgastaldi
              */
             $moeda = (substr(strtolower($intent[0]), 0, 4) == 'euro') ? 'EUR' : 'USD';
             $dolar = json_decode(getPage('http://api.promasters.net.br/cotacao/v1/valores?moedas='.$moeda.'&alt=json'), true);
-            $mensagem = isset($dolar['valores'][$moeda]['valor']) ? "Patrão {$user}, o valor do ".$intent[0]." agora é R$ " . number_format($dolar['valores'][$moeda]['valor'], 2, ',', '.') . "." : "Desculpe patrão {$user}, ainda não li o jornal hoje!";
+            if(isset($dolar['valores'][$moeda]['valor'])){
+                $arrayMensagem = array(
+                    "Patrão {$user}, o valor do ".$intent[0]." agora é R$ " . number_format($dolar['valores'][$moeda]['valor'], 2, ',', '.') . ". Tá caro né?",
+                    "O valor do ".$intent[0]." agora é R$ " . number_format($dolar['valores'][$moeda]['valor'], 2, ',', '.') . ". Você vai viajar patrão {$user}?",
+                    "O ".$intent[0]." está em R$ " . number_format($dolar['valores'][$moeda]['valor'], 2, ',', '.') . ". Bora comprar umas muambas patrão {$user}?",
+                );
+                $mensagem = $arrayMensagem[array_rand($arrayMensagem, 1)];
+            }else{   
+                $mensagem = "Desculpe patrão {$user}, ainda não li o jornal hoje!";
+            }
         } else if (substr(strtolower($intent[0]), 0, 6) == 'batman' || substr($intent[0], 0, 7) == 'bat-man') {
-            $mensagem = "Não conheço nenhum Batman. Apenas trabalho aqui.";
+            /*
+             * BATMAN
+             */
+            $arrayMensagem = array(
+                "Não conheço nenhum Batman. Apenas trabalho aqui.",
+                "Quem é o Batman?! Não conheço.",
+                "Não sei patrão {$user}."       
+            );
+            $mensagem = $arrayMensagem[array_rand($arrayMensagem, 1)];
         } else if (substr(strtolower($intent[0]), 0, 4) == 'time' || substr($intent[0], 0, 7) == 'futebol') {
-            $mensagem = "Não curto futebol, mas gosto do Gotham F.C.";
+             $arrayMensagem = array(
+                "Não curto futebol, mas gosto do Gotham F.C.",
+                "Gotham F.C.",
+                "Gotham F.C. e você ?"       
+            );
+            $mensagem = $arrayMensagem[array_rand($arrayMensagem, 1)];
         } else if (substr(strtolower($intent[0]), 0, 4) == 'raiz' || substr($intent[1], 0, 7) == 'quadrada') {
             $numero = array_values(preg_grep("/^[0-9]+(.)?$/", $palavras));
             $mensagem = "A raiz quadrada de " . $numero[0] . " é " . sqrt($numero[0]);
-        } else if (substr(strtolower($intent[0]), 0, 9) == 'profissão') {
-            $mensagem = "Sou mordomo";
+        } else if (substr(strtolower(removeAC($intent[0]), 0, 9)) == 'profissao') {
+            $arrayMensagem = array(
+                "Sou BotMordomo",
+                "BotMordomo e você?",
+                "BotMordomo! Legal né?"       
+            );
+            $mensagem = $arrayMensagem[array_rand($arrayMensagem, 1)];
         } else if (strpos(strtolower($msg), 'boa noite') !== false) {
-            if ($periodo == 'noite') {
-                $mensagem = "Boa noite, patrão {$user}.";
-            } else {
-                $mensagem = "Mas está de {$periodo}, patrão {$user}";
-            }
+            $mensagem = ($periodo == 'noite') ? "Boa noite, patrão {$user}." : "Mas está de {$periodo}, patrão {$user}";
         } else if (strpos(strtolower($msg), 'boa tarde') !== false) {
-            if ($periodo == 'tarde') {
-                $mensagem = "Boa tarde, patrão {$user}.";
-            } else {
-                $mensagem = "Mas está de {$periodo}, patrão {$user}";
-            }
+            $mensagem = ($periodo == 'tarde') ? "Boa tarde, patrão {$user}." : "Mas está de {$periodo}, patrão {$user}";
         } else if (strpos(strtolower($msg), 'bom dia') !== false) {
-            if ($periodo == 'manhã') {
-                $mensagem = "Bom dia, patrão {$user}.";
-            } else {
-                $mensagem = "Mas está de {$periodo}, patrão {$user}";
-            }
-        } else if (strpos(strtolower($msg), 'que horas são') !== false) {
-            $mensagem = "São " . $time . " e " . date('i') . ", patrão {$user}";
+            $mensagem = ($periodo == 'manhã') ? "Bom dia, patrão {$user}." : "Mas está de {$periodo}, patrão {$user}";
         } else if (strpos(strtolower($msg), 'melhor bot') !== false) {
-            $mensagem = "Melhor bot? Eu.";
+            $arrayMensagem = array(
+                "Sou eu! Você conhece outro?",
+                "BotMordomo! :)",
+                "Quem você acha?! Eu"       
+            );
+            $mensagem = $arrayMensagem[array_rand($arrayMensagem, 1)];
         } else if (strpos(strtolower($msg), 'tempo em') !== false or strpos(strtolower($msg), 'tempo para') !== false) {
             /*
-             * TEMPO
-             * @bgastaldi
+             * PREVISÃO DO TEMPO (API)
              */
             $txt = (strpos(strtolower($msg), 'tempo em') !== false) ? "em" : "para";
             $city = preg_replace('/.*'.$txt.' ([^<]*).*/','$1',$msg);
             $temp = json_decode(getPage('http://api.openweathermap.org/data/2.5/weather?appid=e18cec2f10e6363e05aa8c43b4ae662a&units=metric&q='.$city.',br'), true);
             $mensagem = (isset($temp['main']['temp']) and isset($temp['sys']['country']) and $temp['sys']['country'] == "BR") ? "Patrão {$user}, a temperatura em ".$city." está ".$temp['main']['temp']." °C" : "Desculpe patrão {$user}, não sei a onde fica essa cidade";
-        } else if (strpos(strtolower($msg), 'manda nude') !== false) {
-            $image = "http://i.imgur.com/8q3GqXL.jpg";
+        } else if (strpos(strtolower($msg), 'manda nude') !== false or strpos(strtolower($msg), 'nude') !== false or strpos(strtolower($msg), 'nudes') !== false) {
+            /*
+             * IMAGENS
+             */ 
+            $arrayMensagem = array(
+                "http://oi64.tinypic.com/2dgrx3p.jpg",
+                "http://oi66.tinypic.com/2hmep77.jpg",
+                "http://oi66.tinypic.com/2usfthf.jpg",
+            );
+            $image = $arrayMensagem[array_rand($arrayMensagem, 1)];
+            
+        } else if (strpos(strtolower($msg), 'idade') !== false) {    
+            $arrayMensagem = array(
+                "Tenho 20! Eu acho!",
+                "20 anos. E você?",
+                "Acho que 20 anos"       
+            );
+            $mensagem = $arrayMensagem[array_rand($arrayMensagem, 1)];  
+        } else if (strpos(strtolower($msg), 'nacionalidade') !== false) {    
+            $arrayMensagem = array(
+                "Sou Brasileiro!",
+                "Brasileiro e você?",
+                "Brasileiro!"       
+            );
+            $mensagem = $arrayMensagem[array_rand($arrayMensagem, 1)]; 
         } else if (strtolower($intent[0]) == 'alfred') {
-            $mensagem = "Pois não, patrão {$user}.";
+            $arrayMensagem = array(
+                "Pois não, patrão {$user}.",
+                "Estou aqui, patrão {$user}.",
+                "Pode falar, patrão {$user}.",
+            );
+            $mensagem = $arrayMensagem[array_rand($arrayMensagem, 1)];
         } else if ($intent[0] != '') {
             $mensagem = "Não entendi, patrão {$user}.";
         }
@@ -118,11 +190,9 @@ function processaMensagem($message, $alfred) {
         }
     }
 }
-
 /*
  * GET PAGE
  */
-
 function getPage($url) {
     $curl = curl_init();
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
@@ -133,11 +203,24 @@ function getPage($url) {
     curl_close($curl);
     return $output;
 }
+/*
+ * REMOVER ACENTUAÇÃO
+ */
+function removeAC($string) {
+    return preg_replace('/[`^~\'"]/', null, iconv('UTF-8', 'ASCII//TRANSLIT', $string));
+}
+/*
+ * SALVANDO LOG
+ */
+function logRobots($path, $message) {
+    $fp = fopen($path, "a+");
+    fwrite($fp, $message . chr(13) . chr(10));
+    fclose($fp);
+}
 
 /*
  * FUNCAO ENVIAR RESPOSTA
  */
-
 function enviaResposta($metodo, $parametros) {
     $opcoes = array(
         'http' => array(
@@ -150,25 +233,21 @@ function enviaResposta($metodo, $parametros) {
     $contexto = stream_context_create($opcoes);
     file_get_contents(API_URL . $metodo, false, $contexto);
 }
-
 /*
  * RECEBE UPDATES
  */
 $update_response = file_get_contents("php://input");
 $update = json_decode($update_response, true);
-
 /*
  * VERIFICA SE FOI SOLICITADO CALLBACK QUERY OU REQUISICAO NORMAL
  */
 if (isset($update['callback_query'])) {
     processaCallbackQuery($update['callback_query']);
 }
-
 /*
  * ATIVANDO O BOT
  */
 $alfred = (strpos(strtolower($update['message']['text']), strtolower('alfred')) !== false) ? true : false;
-
 if (isset($update['message']['text']) && (substr($update['message']['text'], 0, 1) == '/' || $alfred/* substr(strtolower($update['message']['text']),0,6) == 'alfred' */)) {
     processaMensagem($update['message'], $alfred);
 }
