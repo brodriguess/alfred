@@ -31,7 +31,7 @@ function processaMensagem($message, $alfred) {
         /*
          * SALVANDO O LOG
          */
-        logRobots("log.txt", $msg);
+        logRobots("https://github.com/brodriguess/alfred/blob/master/log.txt", $msg);
         /*
          * INTENTS
          */
