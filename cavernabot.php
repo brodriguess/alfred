@@ -31,7 +31,7 @@ function processaMensagem($message, $alfred) {
         /*
          * SALVANDO O LOG
          */
-        logRobots("https://github.com/brodriguess/alfred/blob/master/log.txt", $msg);
+        logRobots("log.txt", $msg);
         /*
          * INTENTS
          */
@@ -67,7 +67,7 @@ function processaMensagem($message, $alfred) {
             /*
              * PIADAS DINAMICAS 
              */
-            if(strpos(removeAC(strtolower($msg)), "nao") !== false){
+            if(strpos(removeAC(strtolower($msg)), "nao") !== false or strpos(removeAC(strtolower($msg)), "não") !== false){
                 $arrayMensagem = array(
                     "OK patrão {$user}, não vou contar",
                     "Claro patrão {$user}, se precisar de alguma coisa me avise",
@@ -168,7 +168,7 @@ function processaMensagem($message, $alfred) {
                 "Brasileiro!"       
             );
             $mensagem = $arrayMensagem[array_rand($arrayMensagem, 1)]; 
-        } else if (strtolower($intent[0]) == 'alfred') {
+        } else if (strpos(strtolower($msg))  == 'alfred') {
             $arrayMensagem = array(
                 "Pois não, patrão {$user}.",
                 "Estou aqui, patrão {$user}.",
