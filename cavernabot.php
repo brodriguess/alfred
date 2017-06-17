@@ -14,7 +14,7 @@ function processaMensagem($message, $alfred) {
     $private = ($message['chat']['type'] == "private") ? true : false;
     $sintaxe = preg_split("/\s+/", strtolower($msg), 2);
     $comando = substr(str_ireplace("@cavernabot", "", $sintaxe[0]), 1);
-    $criterio = $sintaxe[1];
+    $criterio = removeAC($sintaxe[1]);
     $image = null;
     if ($comando == "perguntasf" || $comando == "faq") {
         $mensagem = "<b>O que são ChatBots?</b>\nChatbot (ou chatterbot) é um programa de computador que tenta simular um ser humano na conversação com as pessoas. O objetivo é responder as perguntas de tal forma que as pessoas tenham a impressão de estar conversando com outra pessoa e não com um programa de computador. Após o envio de perguntas em linguagem natural, o programa consulta uma base de conhecimento e em seguida fornece uma resposta que tenta imitar o comportamento humano. (<a href='https://pt.wikipedia.org/wiki/Chatterbot'>Wikipedia</a>) ";
@@ -35,7 +35,7 @@ function processaMensagem($message, $alfred) {
          * INTENTS
          */
         $palavras = preg_split("/\s|(?<=\w)(?=[.,:;!?)])|(?<=[.,!()?\x{201C}])/u", removeAC($criterio), -1, PREG_SPLIT_NO_EMPTY);
-        $intent = array_values(preg_grep("(^piada(.)?$|^batman(.)?$|^bat-man(.)?$|^profissao(.)?$|^futebol(.)?$|^time(.)?$|^raiz(.)?$|^quadrada(.)?$|^d(o|ó|ó)lar(.)?$|^euro(.)?$|^hora(.)?$|^data(.)?$|^alfred(.)?$)", $palavras));
+        $intent = array_values(preg_grep("(^piada(.)?$|^batman(.)?$|^bat-man(.)?$|^profiss(a|ã)o(.)?$|^futebol(.)?$|^time(.)?$|^raiz(.)?$|^quadrada(.)?$|^d(o|ó|ó)lar(.)?$|^euro(.)?$|^hora(.)?$|^data(.)?$|^alfred(.)?$)", $palavras));
         
         /*
          * AÇÕES
@@ -114,7 +114,7 @@ function processaMensagem($message, $alfred) {
         } else if (substr(strtolower($intent[0]), 0, 4) == 'raiz' || substr($intent[1], 0, 7) == 'quadrada') {
             $numero = array_values(preg_grep("/^[0-9]+(.)?$/", $palavras));
             $mensagem = "A raiz quadrada de " . $numero[0] . " é " . sqrt($numero[0]);
-        } else if (substr(strtolower(removeAC($intent[0]), 0, 9)) == 'profissao') {
+        } else if (substr(strtolower(removeAC($intent[0]), 0, 9)) == 'profissão') {
             $arrayMensagem = array(
                 "Sou BotMordomo",
                 "BotMordomo e você?",
@@ -167,7 +167,7 @@ function processaMensagem($message, $alfred) {
                 "Brasileiro!"       
             );
             $mensagem = $arrayMensagem[array_rand($arrayMensagem, 1)]; 
-        } else if (strpos(strtolower($msg))  == 'alfred') {
+        } else if (strpos(strtolower($msg)) == 'alfred') {
             $arrayMensagem = array(
                 "Pois não, patrão {$user}.",
                 "Estou aqui, patrão {$user}.",
