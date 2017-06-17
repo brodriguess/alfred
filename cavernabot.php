@@ -34,7 +34,7 @@ function processaMensagem($message, $alfred) {
         } else if ($time >= "18") {
             $periodo = 'noite';
         }
-        $palavras = preg_split("/[.,:;!?()\s]|(?<=\s)-(?=\s)/u", $criterio);
+        $palavras = preg_split('/\s|(?<=\w)(?=[.,:;!?)])|(?<=[.,"!()?\x{201C}])/u', $criterio, -1, PREG_SPLIT_NO_EMPTY)
         $intent = array_values(preg_grep("(^piada(.)?$|^batman(.)?$|^bat-man(.)?$|^profissão(.)?$|^futebol(.)?$|^time(.)?$|^raiz(.)?$|^quadrada(.)?$|^d(o|ó|ó)lar(.)?$|^euro(.)?$|^hora(.)?$|^data(.)?$|^alfred(.)?$)", $palavras));
         
         /*
