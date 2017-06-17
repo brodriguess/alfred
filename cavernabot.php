@@ -66,7 +66,7 @@ function processaMensagem($message, $alfred) {
         } else if (substr(strtolower($intent[0]), 0, 4) == 'time' || substr($intent[0], 0, 7) == 'futebol') {
             $mensagem = "Não curto futebol, mas gosto do Gotham F.C.";
         } else if (substr(strtolower($intent[0]), 0, 4) == 'raiz' || substr($intent[1], 0, 7) == 'quadrada') {
-            $numero = array_values(preg_grep("/^[0-9]+$/", $palavras));
+            $numero = array_values(preg_grep("/^[0-9]+(.)?$/", $palavras));
             $mensagem = "A raiz quadrada de " . $numero[0] . " é " . sqrt($numero[0]);
         } else if (substr(strtolower($intent[0]), 0, 9) == 'profissão') {
             $mensagem = "Sou mordomo";
