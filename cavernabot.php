@@ -1,10 +1,10 @@
 <?php
+
 /*
  * DEFINE TOKEN E API
  */
 define('BOT_TOKEN', '347712677:AAEaX0w4Hmc2oR_QY3911_YF8ixSX8mV2y8');
 define('API_URL', 'https://api.telegram.org/bot' . BOT_TOKEN . '/');
-
 
 function processaMensagem($message, $alfred) {
     $idchat = $destino = $message['chat']['id'];
@@ -26,7 +26,7 @@ function processaMensagem($message, $alfred) {
      * ATIVANDO BOT
      */
     if ($alfred == true) {
-        
+
         /*
          * SALVANDO O LOG
          */
@@ -36,7 +36,7 @@ function processaMensagem($message, $alfred) {
          */
         $palavras = preg_split("/\s|(?<=\w)(?=[.,:;!?)])|(?<=[.,!()?\x{201C}])/u", removeAC($criterio), -1, PREG_SPLIT_NO_EMPTY);
         $intent = array_values(preg_grep("(^piada(.)?$|^batman(.)?$|^bat-man(.)?$|^profiss(a|ã)o(.)?$|^futebol(.)?$|^time(.)?$|^raiz(.)?$|^quadrada(.)?$|^d(o|ó|ó)lar(.)?$|^euro(.)?$|^hora(.)?$|^data(.)?$|^alfred(.)?$)", $palavras));
-        
+
         /*
          * AÇÕES
          */
@@ -44,36 +44,36 @@ function processaMensagem($message, $alfred) {
             /*
              * HORA
              */
-            $hora = date("H:i:s",strtotime('-3 hours'));
+            $hora = date("H:i:s", strtotime('-3 hours'));
             $arrayMensagem = array(
                 "Patrão {$user}, agora são {$hora}",
                 "São {$hora}, patrão {$user}",
-                "Claro! Agora são {$hora}, patrão {$user}"       
+                "Claro! Agora são {$hora}, patrão {$user}"
             );
             $mensagem = $arrayMensagem[array_rand($arrayMensagem, 1)];
-        }elseif (substr($intent[0], 0, 4) == 'data') {
+        } elseif (substr($intent[0], 0, 4) == 'data') {
             /*
              * DATA
              */
-            $data = date("d/m/Y",strtotime('-3 hours'));
+            $data = date("d/m/Y", strtotime('-3 hours'));
             $arrayMensagem = array(
                 "Patrão {$user}, hoje é dia {$data}",
                 "É dia {$data}, patrão {$user}",
-                "Dia {$data}, patrão {$user}"       
+                "Dia {$data}, patrão {$user}"
             );
             $mensagem = $arrayMensagem[array_rand($arrayMensagem, 1)];
-        }else if (substr($intent[0], 0, 5) == 'piada') {
+        } else if (substr($intent[0], 0, 5) == 'piada') {
             /*
              * PIADAS DINAMICAS 
              */
-            if(strpos(strtolower(removeAC($msg)), "nao") !== false or strpos(strtolower(removeAC($msg)), "não") !== false){
+            if (strpos(strtolower(removeAC($msg)), "nao") !== false or strpos(strtolower(removeAC($msg)), "não") !== false) {
                 $arrayMensagem = array(
                     "OK patrão {$user}, não vou contar",
                     "Claro patrão {$user}, se precisar de alguma coisa me avise",
-                    "Hum, não está gostando das minhas piadas?! Desculpe patrão {$user}"       
+                    "Hum, não está gostando das minhas piadas?! Desculpe patrão {$user}"
                 );
                 $mensagem = $arrayMensagem[array_rand($arrayMensagem, 1)];
-            }else{
+            } else {
                 $return = getPage('http://aspiadas.com/randomjoke.php');
                 preg_match_all('/<p>(([^.]|.)*?)<\/p>/', str_replace("<br />", "", utf8_encode($return)), $matches);
                 $mensagem = (isset($matches[1][0])) ? $matches[1][0] : "Desculpe patrão {$user}, hoje não estou conseguindo contar piadas...";
@@ -83,15 +83,15 @@ function processaMensagem($message, $alfred) {
              * COTACAO DO DOLAR
              */
             $moeda = (substr(strtolower($intent[0]), 0, 4) == 'euro') ? 'EUR' : 'USD';
-            $dolar = json_decode(getPage('http://api.promasters.net.br/cotacao/v1/valores?moedas='.$moeda.'&alt=json'), true);
-            if(isset($dolar['valores'][$moeda]['valor'])){
+            $dolar = json_decode(getPage('http://api.promasters.net.br/cotacao/v1/valores?moedas=' . $moeda . '&alt=json'), true);
+            if (isset($dolar['valores'][$moeda]['valor'])) {
                 $arrayMensagem = array(
-                    "Patrão {$user}, o valor do ".$intent[0]." agora é R$ " . number_format($dolar['valores'][$moeda]['valor'], 2, ',', '.') . ". Tá caro né?",
-                    "O valor do ".$intent[0]." agora é R$ " . number_format($dolar['valores'][$moeda]['valor'], 2, ',', '.') . ". Você vai viajar patrão {$user}?",
-                    "O ".$intent[0]." está em R$ " . number_format($dolar['valores'][$moeda]['valor'], 2, ',', '.') . ". Bora comprar umas muambas patrão {$user}?",
+                    "Patrão {$user}, o valor do " . $intent[0] . " agora é R$ " . number_format($dolar['valores'][$moeda]['valor'], 2, ',', '.') . ". Tá caro né?",
+                    "O valor do " . $intent[0] . " agora é R$ " . number_format($dolar['valores'][$moeda]['valor'], 2, ',', '.') . ". Você vai viajar patrão {$user}?",
+                    "O " . $intent[0] . " está em R$ " . number_format($dolar['valores'][$moeda]['valor'], 2, ',', '.') . ". Bora comprar umas muambas patrão {$user}?",
                 );
                 $mensagem = $arrayMensagem[array_rand($arrayMensagem, 1)];
-            }else{   
+            } else {
                 $mensagem = "Desculpe patrão {$user}, ainda não li o jornal hoje!";
             }
         } else if (substr(strtolower($intent[0]), 0, 6) == 'batman' || substr($intent[0], 0, 7) == 'bat-man') {
@@ -101,14 +101,14 @@ function processaMensagem($message, $alfred) {
             $arrayMensagem = array(
                 "Não conheço nenhum Batman. Apenas trabalho aqui.",
                 "Quem é o Batman?! Não conheço.",
-                "Não sei patrão {$user}."       
+                "Não sei patrão {$user}."
             );
             $mensagem = $arrayMensagem[array_rand($arrayMensagem, 1)];
         } else if (substr(strtolower($intent[0]), 0, 4) == 'time' || substr($intent[0], 0, 7) == 'futebol') {
-             $arrayMensagem = array(
+            $arrayMensagem = array(
                 "Não curto futebol, mas gosto do Gotham F.C.",
                 "Gotham F.C.",
-                "Gotham F.C. e você ?"       
+                "Gotham F.C. e você ?"
             );
             $mensagem = $arrayMensagem[array_rand($arrayMensagem, 1)];
         } else if (substr(strtolower($intent[0]), 0, 4) == 'raiz' || substr($intent[1], 0, 7) == 'quadrada') {
@@ -118,7 +118,7 @@ function processaMensagem($message, $alfred) {
             $arrayMensagem = array(
                 "Sou BotMordomo",
                 "BotMordomo e você?",
-                "BotMordomo! Legal né?"       
+                "BotMordomo! Legal né?"
             );
             $mensagem = $arrayMensagem[array_rand($arrayMensagem, 1)];
         } else if (strpos(strtolower($msg), 'boa noite') !== false) {
@@ -131,7 +131,7 @@ function processaMensagem($message, $alfred) {
             $arrayMensagem = array(
                 "Sou eu! Você conhece outro?",
                 "BotMordomo! :)",
-                "Quem você acha?! Eu"       
+                "Quem você acha?! Eu"
             );
             $mensagem = $arrayMensagem[array_rand($arrayMensagem, 1)];
         } else if (strpos(strtolower($msg), 'tempo em') !== false or strpos(strtolower($msg), 'tempo para') !== false) {
@@ -139,34 +139,33 @@ function processaMensagem($message, $alfred) {
              * PREVISÃO DO TEMPO (API)
              */
             $txt = (strpos(strtolower($msg), 'tempo em') !== false) ? "em" : "para";
-            $city = preg_replace('/.*'.$txt.' ([^<]*).*/','$1',$msg);
-            $temp = json_decode(getPage('http://api.openweathermap.org/data/2.5/weather?appid=e18cec2f10e6363e05aa8c43b4ae662a&units=metric&q='.$city.',br'), true);
-            $mensagem = (isset($temp['main']['temp']) and isset($temp['sys']['country']) and $temp['sys']['country'] == "BR") ? "Patrão {$user}, a temperatura em ".$city." está ".$temp['main']['temp']." °C" : "Desculpe patrão {$user}, não sei a onde fica essa cidade";
+            $city = preg_replace('/.*' . $txt . ' ([^<]*).*/', '$1', $msg);
+            $temp = json_decode(getPage('http://api.openweathermap.org/data/2.5/weather?appid=e18cec2f10e6363e05aa8c43b4ae662a&units=metric&q=' . $city . ',br'), true);
+            $mensagem = (isset($temp['main']['temp']) and isset($temp['sys']['country']) and $temp['sys']['country'] == "BR") ? "Patrão {$user}, a temperatura em " . $city . " está " . $temp['main']['temp'] . " °C" : "Desculpe patrão {$user}, não sei a onde fica essa cidade";
         } else if (strpos(strtolower($msg), 'manda nude') !== false or strpos(strtolower($msg), 'nude') !== false or strpos(strtolower($msg), 'nudes') !== false) {
             /*
              * IMAGENS
-             */ 
+             */
             $arrayMensagem = array(
                 "http://oi64.tinypic.com/2dgrx3p.jpg",
                 "http://oi66.tinypic.com/2hmep77.jpg",
                 "http://oi66.tinypic.com/2usfthf.jpg",
             );
             $image = $arrayMensagem[array_rand($arrayMensagem, 1)];
-            
-        } else if (strpos(strtolower($msg), 'idade') !== false) {    
-            $arrayMensagem = array(
-                "Tenho 20! Eu acho!",
-                "20 anos. E você?",
-                "Acho que 20 anos"       
-            );
-            $mensagem = $arrayMensagem[array_rand($arrayMensagem, 1)];  
-        } else if (strpos(strtolower($msg), 'nacionalidade') !== false) {    
+        } else if (strpos(strtolower($msg), 'nacionalidade') !== false) {
             $arrayMensagem = array(
                 "Sou Brasileiro!",
                 "Brasileiro e você?",
-                "Brasileiro!"       
+                "Brasileiro!"
             );
-            $mensagem = $arrayMensagem[array_rand($arrayMensagem, 1)]; 
+            $mensagem = $arrayMensagem[array_rand($arrayMensagem, 1)];
+        } else if (strpos(strtolower($msg), 'idade') !== false) {
+            $arrayMensagem = array(
+                "Tenho 20! Eu acho!",
+                "20 anos. E você?",
+                "Acho que 20 anos"
+            );
+            $mensagem = $arrayMensagem[array_rand($arrayMensagem, 1)];
         } else if (strpos(strtolower($msg)) == 'alfred') {
             $arrayMensagem = array(
                 "Pois não, patrão {$user}.",
@@ -179,9 +178,9 @@ function processaMensagem($message, $alfred) {
         }
     }
     $replymarkup = false;
-    if(!empty($image)){
+    if (!empty($image)) {
         enviaResposta("sendPhoto", array('chat_id' => $destino, 'photo' => $image));
-    }else if ($mensagem != "") {
+    } else if ($mensagem != "") {
         if ($replymarkup) {
             enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $destino, 'disable_web_page_preview' => true, 'text' => $mensagem, 'reply_markup' => $replymarkup));
         } else {
@@ -189,28 +188,34 @@ function processaMensagem($message, $alfred) {
         }
     }
 }
+
 /*
  * GET PAGE
  */
+
 function getPage($url) {
     $curl = curl_init();
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($curl, CURLOPT_URL, $url);
     curl_setopt($curl, CURLOPT_ENCODING, "utf8");
-    curl_setopt($curl, CURLOPT_USERAGENT,'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:7.0.1) Gecko/20100101 Firefox/7.0.1');
+    curl_setopt($curl, CURLOPT_USERAGENT, 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:7.0.1) Gecko/20100101 Firefox/7.0.1');
     $output = curl_exec($curl);
     curl_close($curl);
     return $output;
 }
+
 /*
  * REMOVER ACENTUAÇÃO
  */
+
 function removeAC($string) {
     return preg_replace('/[`^~\'"]/', null, iconv('UTF-8', 'ASCII//TRANSLIT', $string));
 }
+
 /*
  * SALVANDO LOG
  */
+
 function logRobots($path, $message) {
     $fp = fopen($path, "a+");
     fwrite($fp, $message . chr(13) . chr(10));
@@ -220,6 +225,7 @@ function logRobots($path, $message) {
 /*
  * FUNCAO ENVIAR RESPOSTA
  */
+
 function enviaResposta($metodo, $parametros) {
     $opcoes = array(
         'http' => array(
@@ -232,6 +238,7 @@ function enviaResposta($metodo, $parametros) {
     $contexto = stream_context_create($opcoes);
     file_get_contents(API_URL . $metodo, false, $contexto);
 }
+
 /*
  * RECEBE UPDATES
  */
