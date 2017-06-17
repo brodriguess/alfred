@@ -161,9 +161,9 @@ function processaMensagem($message, $alfred) {
             $mensagem = $arrayMensagem[array_rand($arrayMensagem, 1)];
         } else if (strpos(strtolower($msg), 'idade') !== false) {
             $arrayMensagem = array(
-                "Tenho 20! Eu acho!",
-                "20 anos. E você?",
-                "Acho que 20 anos"
+                "Tenho 80! Eu acho!",
+                "80 anos. E você?",
+                "Acho que 80 anos"
             );
             $mensagem = $arrayMensagem[array_rand($arrayMensagem, 1)];
         } else if (strpos(strtolower($msg), 'repositório') !== false or strpos(strtolower($msg), 'repositorio') !== false) {
