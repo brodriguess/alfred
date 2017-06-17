@@ -30,7 +30,7 @@ function processaMensagem($message, $alfred) {
         /*
          * SALVANDO O LOG
          */
-        logRobots("log.txt", $msg);
+        //logRobots("log.txt", $msg);
         /*
          * INTENTS
          */
@@ -164,6 +164,12 @@ function processaMensagem($message, $alfred) {
                 "Tenho 20! Eu acho!",
                 "20 anos. E você?",
                 "Acho que 20 anos"
+            );
+            $mensagem = $arrayMensagem[array_rand($arrayMensagem, 1)];
+        } else if (strpos(strtolower($msg), 'repositório') !== false or strpos(strtolower($msg), 'repositorio') !== false) {
+            $arrayMensagem = array(
+                "Segue Patrão {$user}, https://github.com/brodriguess/alfred",
+                "Aqui está patrão {$user}, https://github.com/brodriguess/alfred"
             );
             $mensagem = $arrayMensagem[array_rand($arrayMensagem, 1)];
         } else if (strpos(strtolower($msg)) == 'alfred') {
