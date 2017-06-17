@@ -1,5 +1,4 @@
 <?php
-
 /*
  * DEFINE TOKEN E API
  */
@@ -36,7 +35,7 @@ function processaMensagem($message, $alfred) {
          * INTENTS
          */
         $palavras = preg_split("/\s|(?<=\w)(?=[.,:;!?)])|(?<=[.,!()?\x{201C}])/u", removeAC($criterio), -1, PREG_SPLIT_NO_EMPTY);
-        $intent = array_values(preg_grep("(^piada(.)?$|^batman(.)?$|^bat-man(.)?$|^profissão(.)?$|^futebol(.)?$|^time(.)?$|^raiz(.)?$|^quadrada(.)?$|^d(o|ó|ó)lar(.)?$|^euro(.)?$|^hora(.)?$|^data(.)?$|^alfred(.)?$)", $palavras));
+        $intent = array_values(preg_grep("(^piada(.)?$|^batman(.)?$|^bat-man(.)?$|^profissao(.)?$|^futebol(.)?$|^time(.)?$|^raiz(.)?$|^quadrada(.)?$|^d(o|ó|ó)lar(.)?$|^euro(.)?$|^hora(.)?$|^data(.)?$|^alfred(.)?$)", $palavras));
         
         /*
          * AÇÕES
@@ -67,7 +66,7 @@ function processaMensagem($message, $alfred) {
             /*
              * PIADAS DINAMICAS 
              */
-            if(strpos(removeAC(strtolower($msg)), "nao") !== false or strpos(removeAC(strtolower($msg)), "não") !== false){
+            if(strpos(strtolower(removeAC($msg)), "nao") !== false or strpos(strtolower(removeAC($msg)), "não") !== false){
                 $arrayMensagem = array(
                     "OK patrão {$user}, não vou contar",
                     "Claro patrão {$user}, se precisar de alguma coisa me avise",
