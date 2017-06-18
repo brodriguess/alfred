@@ -166,23 +166,21 @@ function processaMensagem($message, $alfred) {
                 "http://oi66.tinypic.com/2usfthf.jpg",
             );
             $image = $arrayMensagem[array_rand($arrayMensagem, 1)];
-        } else if (strpos(strtolower($msg), 'nacionalidade') !== false) {
+        }
+        
+        else if (strpos(strtolower($msg), 'nacionalidade') !== false) {
             nacionalidade(array('destino' => $destino));
-            $mensagem = $arrayMensagem[array_rand($arrayMensagem, 1)];
-        } else if (strpos(strtolower($msg), 'idade') !== false) {
-            $arrayMensagem = array(
-                "Tenho 80! Eu acho!",
-                "80 anos. E você?",
-                "Acho que 80 anos"
-            );
-            $mensagem = $arrayMensagem[array_rand($arrayMensagem, 1)];
-        } else if (strpos(strtolower($msg), 'repositório') !== false or strpos(strtolower($msg), 'repositorio') !== false) {
-            $arrayMensagem = array(
-                "Segue Patrão {$user}, https://github.com/brodriguess/alfred",
-                "Aqui está patrão {$user}, https://github.com/brodriguess/alfred"
-            );
-            $mensagem = $arrayMensagem[array_rand($arrayMensagem, 1)];
-        } else if (strpos(strtolower($msg)) == 'alfred') {
+        }
+        
+        else if (strpos(strtolower($msg), 'idade') !== false) {
+            idade(array('destino' => $destino));
+        }
+        
+        else if (strpos(strtolower($msg), 'repositório') !== false or strpos(strtolower($msg), 'repositorio') !== false) {
+            repositorio(array('destino' => $destino));
+        }
+        
+        else if (strpos(strtolower($msg)) == 'alfred') {
             $arrayMensagem = array(
                 "Pois não, patrão {$user}.",
                 "Estou aqui, patrão {$user}.",
