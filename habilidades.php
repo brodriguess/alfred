@@ -43,12 +43,13 @@ function idade($args = array()) {
     enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true, 'text' => $arrayMensagem[array_rand($arrayMensagem, 1)]));
 }
 
-function repositorio() {
+function repositorio($args = array()) {
     $arrayMensagem = array(
         "Segue Patrão {$user}, https://github.com/brodriguess/alfred",
         "Aqui está patrão {$user}, https://github.com/brodriguess/alfred"
     );
-    return $arrayMensagem[array_rand($arrayMensagem, 1)];
+    
+    enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true, 'text' => $arrayMensagem[array_rand($arrayMensagem, 1)]));
 }
 
 function manda_nude() {
@@ -57,7 +58,8 @@ function manda_nude() {
         "http://oi66.tinypic.com/2hmep77.jpg",
         "http://oi66.tinypic.com/2usfthf.jpg",
     );
-    return $arrayMensagem[array_rand($arrayMensagem, 1)];
+    
+    enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true, 'text' => $arrayMensagem[array_rand($arrayMensagem, 1)]));
 }
 
 function periodo() {
@@ -65,7 +67,7 @@ function periodo() {
         return 'manhã';
     if (date('H') >= 12 && date('H') < 18)
         return 'tarde';
-    if (date('H') >= 18 && date('H') < 23)
+    if (date('H') >= 18 && date('H') <= 23)
         return 'noite';
 }
 
