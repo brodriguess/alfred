@@ -168,18 +168,6 @@ function processaMensagem($message, $alfred) {
             $image = $arrayMensagem[array_rand($arrayMensagem, 1)];
         }
         
-        else if (strpos(strtolower($msg), 'nacionalidade') !== false) {
-            nacionalidade(array('destino' => $destino));
-        }
-        
-        else if (strpos(strtolower($msg), 'idade') !== false) {
-            idade(array('destino' => $destino));
-        }
-        
-        else if (strpos(strtolower($msg), 'repositório') !== false or strpos(strtolower($msg), 'repositorio') !== false) {
-            repositorio(array('destino' => $destino));
-        }
-        
         else if (strpos(strtolower($msg)) == 'alfred') {
             $arrayMensagem = array(
                 "Pois não, patrão {$user}.",
@@ -189,6 +177,19 @@ function processaMensagem($message, $alfred) {
             $mensagem = $arrayMensagem[array_rand($arrayMensagem, 1)];
         } else if ($intent[0] != '') {
             $mensagem = "Não entendi, patrão {$user}.";
+        }
+        
+        
+        if (strpos(strtolower($msg), 'nacionalidade') !== false) {
+            nacionalidade(array('destino' => $destino));
+        }
+        
+        if (strpos(strtolower($msg), 'idade') !== false) {
+            idade(array('destino' => $destino));
+        }
+        
+        if (strpos(strtolower($msg), 'repositório') !== false or strpos(strtolower($msg), 'repositorio') !== false) {
+            repositorio(array('destino' => $destino));
         }
     }
     $replymarkup = false;
