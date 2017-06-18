@@ -29,7 +29,8 @@ function nacionalidade() {
         "Brasileiro e você?",
         "Brasileiro!"
     );
-    return $arrayMensagem[array_rand($arrayMensagem, 1)];
+    
+    enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $destino, 'disable_web_page_preview' => true, 'text' => $arrayMensagem[array_rand($arrayMensagem, 1)]));
 }
 
 function idade() {
