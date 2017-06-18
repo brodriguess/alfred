@@ -31,6 +31,18 @@ function processaMensagem($message, $alfred) {
          * SALVANDO O LOG
          */
         //logRobots("log.txt", $msg);
+        
+        /*
+         * PERIODO
+         */
+         $time = date("H", strtotime('-3 hours'));
+        if ($time < "12") {
+            $periodo = 'manhã';
+        } else if ($time >= "12" && $time < "18") {
+            $periodo = 'tarde';
+        } else if ($time >= "18") {
+            $periodo = 'noite';
+        }
         /*
          * INTENTS
          */
