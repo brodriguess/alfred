@@ -1,6 +1,7 @@
 <?php
 
-function habilidades() {
+function habilidades()
+{
     return [
         'alfred',
         'nacionalidade',
@@ -13,46 +14,56 @@ function habilidades() {
     ];
 }
 
-function alfred() {
+function alfred($args = array())
+{
     $arrayMensagem = array(
         "Pois não, patrão {$user}.",
         "Estou aqui, patrão {$user}.",
         "Pode falar, patrão {$user}.",
     );
     
-    return ($intent[0] != '') ? "Não entendi, patrão {$user}." : $arrayMensagem[array_rand($arrayMensagem, 1)];
+    if ($intent[0] != '') {
+        enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true, 'text' => "Não entendi, patrão {$args['user']}."));
+        return;
+    }
+    
+    enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true, 'text' => $arrayMensagem[array_rand($arrayMensagem, 1)]));
 }
 
-function nacionalidade($args = array()) {
+function nacionalidade($args = array())
+{
     $arrayMensagem = array(
         "Sou Brasileiro!",
-        "Brasileiro e você?",
+        //"Brasileiro e você?",
         "Brasileiro!"
     );
     
     enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true, 'text' => $arrayMensagem[array_rand($arrayMensagem, 1)]));
 }
 
-function idade($args = array()) {
+function idade($args = array())
+{
     $arrayMensagem = array(
         "Tenho 80! Eu acho!",
-        "80 anos. E você?",
+        //"80 anos. E você?",
         "Acho que 80 anos"
     );
     
     enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true, 'text' => $arrayMensagem[array_rand($arrayMensagem, 1)]));
 }
 
-function repositorio($args = array()) {
+function repositorio($args = array())
+{
     $arrayMensagem = array(
-        "Segue Patrão {$user}, https://github.com/brodriguess/alfred",
-        "Aqui está patrão {$user}, https://github.com/brodriguess/alfred"
+        "Patrão {$user}, você pode me programar aqui https://github.com/brodriguess/alfred",
+        "Aqui está patrão {$user}, escreve aqui https://github.com/brodriguess/alfred"
     );
     
     enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true, 'text' => $arrayMensagem[array_rand($arrayMensagem, 1)]));
 }
 
-function manda_nude() {
+function manda_nude()
+{
     $arrayMensagem = array(
         "http://oi64.tinypic.com/2dgrx3p.jpg",
         "http://oi66.tinypic.com/2hmep77.jpg",
@@ -62,7 +73,8 @@ function manda_nude() {
     enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true, 'text' => $arrayMensagem[array_rand($arrayMensagem, 1)]));
 }
 
-function periodo() {
+function periodo()
+{
     if (date('H') >= 0 && date('H') < 12)
         return 'manhã';
     if (date('H') >= 12 && date('H') < 18)
@@ -71,15 +83,22 @@ function periodo() {
         return 'noite';
 }
 
-function bom_dia() {
-    return periodo() == 'manhã' ? "Bom dia, patrão {$user}." : "Mas está de {periodo()}, patrão {$user}";
+function bom_dia($args = array())
+{
+    if(periodo() == 'manhã') {
+        enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true, 'text' => "Bom dia, patrão {$args['user']}."));
+        return;
+    }
+    enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true, 'text' => "Mas está de {periodo()}, patrão {$user}"));
 }
 
-function boa_tarde() {
+function boa_tarde($args = array())
+{
     return periodo() == 'tarde' ? "Boa tarde, patrão {$user}." : "Mas está de {periodo()}, patrão {$user}";
 }
 
-function boa_noite() {
+function boa_noite($args = array())
+{
     return periodo() == 'noite' ? "Boa noite, patrão {$user}." : "Mas está de {periodo()}, patrão {$user}";
 }
 
