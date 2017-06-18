@@ -25,9 +25,9 @@ function alfred() {
 
 function nacionalidade($args = array()) {
     $arrayMensagem = array(
-        "Sou Brasileiro!",
-        "Brasileiro e você?",
-        "Brasileiro!"
+        "Sou Brasileiraço!",
+        "Brasileiro e você?2",
+        "Brasileiro! Não desisto nunca."
     );
     
     enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true, 'text' => $arrayMensagem[array_rand($arrayMensagem, 1)]));
