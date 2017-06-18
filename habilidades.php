@@ -23,14 +23,14 @@ function alfred() {
     return ($intent[0] != '') ? "Não entendi, patrão {$user}." ? $arrayMensagem[array_rand($arrayMensagem, 1)];
 }
 
-function nacionalidade() {
+function nacionalidade(Array $args = []) {
     $arrayMensagem = array(
         "Sou Brasileiro!",
         "Brasileiro e você?",
         "Brasileiro!"
     );
     
-    enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $destino, 'disable_web_page_preview' => true, 'text' => $arrayMensagem[array_rand($arrayMensagem, 1)]));
+    enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true, 'text' => $arrayMensagem[array_rand($arrayMensagem, 1)]));
 }
 
 function idade() {
