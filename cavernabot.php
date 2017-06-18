@@ -6,6 +6,8 @@
 define('BOT_TOKEN', '347712677:AAEaX0w4Hmc2oR_QY3911_YF8ixSX8mV2y8');
 define('API_URL', 'https://api.telegram.org/bot' . BOT_TOKEN . '/');
 
+require 'habilidades.php';
+
 function processaMensagem($message, $alfred) {
     $idchat = $destino = $message['chat']['id'];
     $iduser = $message['from']['id'];
@@ -165,11 +167,7 @@ function processaMensagem($message, $alfred) {
             );
             $image = $arrayMensagem[array_rand($arrayMensagem, 1)];
         } else if (strpos(strtolower($msg), 'nacionalidade') !== false) {
-            $arrayMensagem = array(
-                "Sou Brasileiro!",
-                "Brasileiro e você?",
-                "Brasileiro!"
-            );
+            nacionalidade();
             $mensagem = $arrayMensagem[array_rand($arrayMensagem, 1)];
         } else if (strpos(strtolower($msg), 'idade') !== false) {
             $arrayMensagem = array(
