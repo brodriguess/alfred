@@ -20,7 +20,7 @@ function alfred() {
         "Pode falar, patrão {$user}.",
     );
     
-    return ($intent[0] != '') ? "Não entendi, patrão {$user}." ? $arrayMensagem[array_rand($arrayMensagem, 1)];
+    return ($intent[0] != '') ? "Não entendi, patrão {$user}." : $arrayMensagem[array_rand($arrayMensagem, 1)];
 }
 
 function nacionalidade($args = array()) {
