@@ -167,7 +167,7 @@ function processaMensagem($message, $alfred) {
             );
             $image = $arrayMensagem[array_rand($arrayMensagem, 1)];
         } else if (strpos(strtolower($msg), 'nacionalidade') !== false) {
-            nacionalidade(['destino' => $destino]);
+            nacionalidade(array('destino' => $destino));
             $mensagem = $arrayMensagem[array_rand($arrayMensagem, 1)];
         } else if (strpos(strtolower($msg), 'idade') !== false) {
             $arrayMensagem = array(
