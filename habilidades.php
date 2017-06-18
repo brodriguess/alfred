@@ -23,7 +23,7 @@ function alfred() {
     return ($intent[0] != '') ? "Não entendi, patrão {$user}." ? $arrayMensagem[array_rand($arrayMensagem, 1)];
 }
 
-function nacionalidade(Array $args = []) {
+function nacionalidade($args = array()) {
     $arrayMensagem = array(
         "Sou Brasileiro!",
         "Brasileiro e você?",
