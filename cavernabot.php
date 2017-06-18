@@ -153,7 +153,7 @@ function processaMensagem($message, $alfred) {
             $txt = (strpos(strtolower($msg), 'tempo em') !== false) ? "em" : "para";
             $city = preg_replace('/.*' . $txt . ' ([^<]*).*/', '$1', $msg);
             $temp = json_decode(getPage('http://api.openweathermap.org/data/2.5/weather?appid=e18cec2f10e6363e05aa8c43b4ae662a&units=metric&q=' . $city . ',br'), true);
-            $mensagem = (isset($temp['main']['temp']) and isset($temp['sys']['country']) and $temp['sys']['country'] == "BR") ? "Patrão {$user}, a temperatura em " . $city . " está " . $temp['main']['temp'] . " °C" : "Desculpe patrão {$user}, não sei a onde fica essa cidade";
+            $mensagem = (isset($temp['main']['temp']) and isset($temp['sys']['country']) and $temp['sys']['country'] == "BR") ? "Patrão {$user}, a temperatura em " . $city . " está " . $temp['main']['temp'] . " °C, a humidade está " . $temp['main']['humidity'] . ', e a velocidade do vento está ' . $temp['wind']['speed']: "Desculpe patrão {$user}, não sei a onde fica essa cidade";
         } else if (strpos(strtolower($msg), 'manda nude') !== false or strpos(strtolower($msg), 'nude') !== false or strpos(strtolower($msg), 'nudes') !== false) {
             /*
              * IMAGENS
