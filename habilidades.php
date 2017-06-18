@@ -33,13 +33,14 @@ function nacionalidade($args = array()) {
     enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true, 'text' => $arrayMensagem[array_rand($arrayMensagem, 1)]));
 }
 
-function idade() {
+function idade($args = array()) {
     $arrayMensagem = array(
         "Tenho 80! Eu acho!",
         "80 anos. E você?",
         "Acho que 80 anos"
     );
-    return $arrayMensagem[array_rand($arrayMensagem, 1)];
+    
+    enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true, 'text' => $arrayMensagem[array_rand($arrayMensagem, 1)]));
 }
 
 function repositorio() {
