@@ -17,9 +17,9 @@ function habilidades()
 function alfred($args = array())
 {
     $arrayMensagem = array(
-        "Pois não, patrão {$user}.",
-        "Estou aqui, patrão {$user}.",
-        "Pode falar, patrão {$user}.",
+        "Pois não, patrão {$args['user']}.",
+        "Estou aqui, patrão {$args['user']}.",
+        "Pode falar, patrão {$args['user']}.",
     );
     
     if ($intent[0] != '') {
@@ -62,7 +62,7 @@ function repositorio($args = array())
     enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true, 'text' => $arrayMensagem[array_rand($arrayMensagem, 1)]));
 }
 
-function manda_nude()
+function manda_nude($args = array())
 {
     $arrayMensagem = array(
         "http://oi64.tinypic.com/2dgrx3p.jpg",
