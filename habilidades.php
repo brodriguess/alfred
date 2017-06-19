@@ -186,10 +186,10 @@ function tempo_em($args = array())
         enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true,
             'text' => "Patrão {$args['user']}, o tempo em " . $city . 
                 " está com {$t[$temp->weather[0]->description]}, a temperatura é de " .
-                $temp['main']['temp'] ."°C, a humidade " . $temp['main']['humidity'] . '%, e a velocidade do vento é de ' . $temp['wind']['speed'].'m/s.'
+                $temp['main']['temp'] ."°C, a umidade " . $temp['main']['humidity'] . '%, e a velocidade do vento é de ' . $temp['wind']['speed'].'m/s.'
         )) :
         enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true,
-            'text' => "Desculpe patrão {$args['user']}, não sei a onde fica essa cidade"
+            'text' => "Me desculpe patrão {$args['user']}, não sei a onde fica essa cidade"
         ));
 }
 
@@ -202,7 +202,7 @@ function piada($args = array())
             'text' => $matches[1][0]
         )) :
         enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true,
-            'text' => "Desculpe patrão {$args['user']}, hoje não estou conseguindo contar piadas..."
+            'text' => "Patrão {$args['user']}, desculpe-me, hoje não estou conseguindo contar piadas..."
         ));
     
     /*
