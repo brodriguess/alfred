@@ -94,11 +94,38 @@ function bom_dia($args = array())
 
 function boa_tarde($args = array())
 {
-    return periodo() == 'tarde' ? "Boa tarde, patrão {$user}." : "Mas está de {periodo()}, patrão {$user}";
+    if(periodo() == 'tarde') {
+        enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true, 'text' => "Boa tarde, patrão {$args['user']}."));
+        return;
+    }
+    enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true, 'text' => "Mas está de {periodo()}, patrão {$args['user']}"));
 }
 
 function boa_noite($args = array())
 {
-    return periodo() == 'noite' ? "Boa noite, patrão {$user}." : "Mas está de {periodo()}, patrão {$user}";
+    if(periodo() == 'noite') {
+        enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true, 'text' => "Boa noite, patrão {$args['user']}."));
+        return;
+    }
+    enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true, 'text' => "Mas está de {periodo()}, patrão {$args['user']}"));
 }
 
+/**
+ * PREVISÃO DO TEMPO (API)
+ **/
+function tempo_em($args = array())
+{
+    $txt = (strpos(strtolower($msg), 'tempo em') !== false) ? "em" : "para";
+    $city = preg_replace('/.*' . $txt . ' ([^<]*).*/', '$1', $msg);
+    $temp = json_decode(getPage('http://api.openweathermap.org/data/2.5/weather?appid=e18cec2f10e6363e05aa8c43b4ae662a&units=metric&q=' . $city . ',br'), true);
+    
+    (isset($temp['main']['temp']) and isset($temp['sys']['country']) and $temp['sys']['country'] == "BR") ?
+        enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true,
+            'text' => "Patrão {$args['user']}, a temperatura em " .
+                $city . " estar " . $temp['main']['temp'] . "°C, a humidade " .
+                $temp['main']['humidity'] . '%, e a velocidade do vento é de ' . $temp['wind']['speed'].'km/h.'
+        )) :
+        enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true,
+            'text' => "Desculpe patrão {$args['user']}, não sei a onde fica essa cidade"
+        ));
+}
