@@ -162,3 +162,28 @@ function tempo_em($args = array())
             'text' => "Desculpe patrão {$args['user']}, não sei a onde fica essa cidade"
         ));
 }
+
+function piada($args = array())
+{
+    $return = getPage('http://aspiadas.com/randomjoke.php');
+    preg_match_all('/<p>(([^.]|.)*?)<\/p>/', str_replace("<br />", "", utf8_encode($return)), $matches);
+    (isset($matches[1][0])) ?
+        enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true,
+            'text' => $matches[1][0]
+        )) :
+        enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true,
+            'text' => "Desculpe patrão {$args['user']}, hoje não estou conseguindo contar piadas..."
+        ));
+    
+    /*
+    if (strpos(strtolower(removeAC($msg)), "nao") !== false or strpos(strtolower(removeAC($msg)), "não") !== false) {
+                $arrayMensagem = array(
+                    "OK patrão {$user}, não vou contar",
+                    "Claro patrão {$user}, se precisar de alguma coisa me avise",
+                    "Hum, não está gostando das minhas piadas?! Desculpe patrão {$user}"
+                );
+                $mensagem = $arrayMensagem[array_rand($arrayMensagem, 1)];
+            } else {
+            }
+     */
+}
