@@ -69,9 +69,10 @@ function manda_nude($args = array())
         "http://oi66.tinypic.com/2hmep77.jpg",
         "http://oi66.tinypic.com/2usfthf.jpg",
     );
-    
-    enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true, 'text' => $arrayMensagem[array_rand($arrayMensagem, 1)]));
+    enviaResposta("sendPhoto", array('chat_id' => $args['destino'], 'photo' =>  $arrayMensagem[array_rand($arrayMensagem, 1)]));
 }
+
+date_default_timezone_set('America/Bahia');
 
 function periodo()
 {
