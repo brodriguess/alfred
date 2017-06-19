@@ -139,8 +139,6 @@ function processaMensagem($message, $alfred) {
             $mensagem = ($periodo == 'noite') ? "Boa noite, patrão {$user}." : "Mas está de {$periodo}, patrão {$user}";
         } else if (strpos(strtolower($msg), 'boa tarde') !== false) {
             $mensagem = ($periodo == 'tarde') ? "Boa tarde, patrão {$user}." : "Mas está de {$periodo}, patrão {$user}";
-        } else if (strpos(strtolower($msg), 'bom dia') !== false) {
-            $mensagem = ($periodo == 'manhã') ? "Bom dia, patrão {$user}." : "Mas está de {$periodo}, patrão {$user}";
         } else if (strpos(strtolower($msg), 'melhor bot') !== false) {
             $arrayMensagem = array(
                 "Sou eu! Você conhece outro?",
@@ -156,29 +154,18 @@ function processaMensagem($message, $alfred) {
             $city = preg_replace('/.*' . $txt . ' ([^<]*).*/', '$1', $msg);
             $temp = json_decode(getPage('http://api.openweathermap.org/data/2.5/weather?appid=e18cec2f10e6363e05aa8c43b4ae662a&units=metric&q=' . $city . ',br'), true);
             $mensagem = (isset($temp['main']['temp']) and isset($temp['sys']['country']) and $temp['sys']['country'] == "BR") ? "Patrão {$user}, a temperatura em " . $city . " está " . $temp['main']['temp'] . " °C, a humidade está " . $temp['main']['humidity'] . ', e a velocidade do vento está ' . $temp['wind']['speed']: "Desculpe patrão {$user}, não sei a onde fica essa cidade";
-        } else if (strpos(strtolower($msg), 'manda nude') !== false or strpos(strtolower($msg), 'nude') !== false or strpos(strtolower($msg), 'nudes') !== false) {
-            /*
-             * IMAGENS
-             */
-            $arrayMensagem = array(
-                "http://oi64.tinypic.com/2dgrx3p.jpg",
-                "http://oi66.tinypic.com/2hmep77.jpg",
-                "http://oi66.tinypic.com/2usfthf.jpg",
-            );
-            $image = $arrayMensagem[array_rand($arrayMensagem, 1)];
         }
-        
-        else if (strpos(strtolower($msg)) == 'alfred') {
-            $arrayMensagem = array(
-                "Pois não, patrão {$user}.",
-                "Estou aqui, patrão {$user}.",
-                "Pode falar, patrão {$user}.",
-            );
-            $mensagem = $arrayMensagem[array_rand($arrayMensagem, 1)];
-        } else if ($intent[0] != '') {
+        else if ($intent[0] != '') {
             $mensagem = "Não entendi, patrão {$user}.";
         }
         
+        if (strpos(strtolower($msg)) == 'alfred') {
+            alfred(array('destino' => $destino));
+        } 
+        
+        if (strpos(strtolower($msg), 'bom dia') !== false) {
+            bom_dia(array('destino' => $destino, 'user' => $user));
+        }
         
         if (strpos(strtolower($msg), 'nacionalidade') !== false) {
             nacionalidade(array('destino' => $destino));
@@ -191,6 +178,11 @@ function processaMensagem($message, $alfred) {
         if (strpos(strtolower($msg), 'repositório') !== false or strpos(strtolower($msg), 'repositorio') !== false) {
             repositorio(array('destino' => $destino));
         }
+        
+        if (strpos(strtolower($msg), 'manda nude') !== false or strpos(strtolower($msg), 'nude') !== false or strpos(strtolower($msg), 'nudes') !== false) {
+            manda_nude(array('destino' => $destino));
+        }
+        
     }
     $replymarkup = false;
     if (!empty($image)) {
