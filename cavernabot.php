@@ -54,29 +54,7 @@ function processaMensagem($message, $alfred) {
         /*
          * AÇÕES
          */
-        if (substr($intent[0], 0, 4) == 'hora') {
-            /*
-             * HORA
-             */
-            $hora = date("H:i:s", strtotime('-3 hours'));
-            $arrayMensagem = array(
-                "Patrão {$user}, agora são {$hora}",
-                "São {$hora}, patrão {$user}",
-                "Claro! Agora são {$hora}, patrão {$user}"
-            );
-            $mensagem = $arrayMensagem[array_rand($arrayMensagem, 1)];
-        } elseif (substr($intent[0], 0, 4) == 'data') {
-            /*
-             * DATA
-             */
-            $data = date("d/m/Y", strtotime('-3 hours'));
-            $arrayMensagem = array(
-                "Patrão {$user}, hoje é dia {$data}",
-                "É dia {$data}, patrão {$user}",
-                "Dia {$data}, patrão {$user}"
-            );
-            $mensagem = $arrayMensagem[array_rand($arrayMensagem, 1)];
-        } else if (substr($intent[0], 0, 5) == 'piada') {
+        if (substr($intent[0], 0, 5) == 'piada') {
             /*
              * PIADAS DINAMICAS 
              */
@@ -157,6 +135,14 @@ function processaMensagem($message, $alfred) {
         
         if (strpos(strtolower($msg), 'boa noite') !== false) {
             boa_noite(array('destino' => $destino, 'user' => $user));
+        }
+        
+        if (substr($intent[0], 0, 4) == 'hora') {
+            hora(array('destino' => $destino, 'user' => $user));
+        }
+        
+        if (substr($intent[0], 0, 4) == 'data') {
+            data(array('destino' => $destino, 'user' => $user));
         }
         
         if (strpos(strtolower($msg), 'nacionalidade') !== false) {
