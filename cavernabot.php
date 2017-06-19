@@ -139,7 +139,7 @@ function processaMensagem($message, $alfred) {
         }
         
         if (strpos(strtolower($msg), 'tempo em') !== false or strpos(strtolower($msg), 'tempo para') !== false) {
-            tempo_em(array('destino' => $destino, 'user' => $user));
+            tempo_em(array('msg' => $msg, 'destino' => $destino, 'user' => $user));
         }
         
         if (strpos(strtolower($msg), 'piada')) {
