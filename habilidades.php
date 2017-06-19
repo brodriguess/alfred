@@ -30,6 +30,7 @@ function alfred($args = array())
     enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true, 'text' => $arrayMensagem[array_rand($arrayMensagem, 1)]));
 }
 
+/*
 function dolar($args = array())
 {
     $moeda = (strpos(strtolower($args['msg']), 'dolar') !== false) ? "USD" : "EUR";
@@ -47,6 +48,7 @@ function dolar($args = array())
     }
     enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true, 'text' => $mensagem, 1)]));
 }
+*/
 
 function melhor_bot($args = array())
 {
