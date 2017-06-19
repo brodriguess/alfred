@@ -126,7 +126,7 @@ function processaMensagem($message, $alfred) {
             nacionalidade(array('destino' => $destino));
         }
         
-        if (strpos(strtolower($msg), 'idade') !== false) {
+        if (strpos(strtolower($msg), ' idade') !== false) {
             idade(array('destino' => $destino));
         }
         
