@@ -89,7 +89,7 @@ function bom_dia($args = array())
         enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true, 'text' => "Bom dia, patrão {$args['user']}."));
         return;
     }
-    enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true, 'text' => "Mas está de {periodo()}, patrão {$args['user']}"));
+    enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true, 'text' => "Mas está de ".periodo().", patrão {$args['user']}"));
 }
 
 function boa_tarde($args = array())
@@ -98,7 +98,7 @@ function boa_tarde($args = array())
         enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true, 'text' => "Boa tarde, patrão {$args['user']}."));
         return;
     }
-    enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true, 'text' => "Mas está de {periodo()}, patrão {$args['user']}"));
+    enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true, 'text' => "Mas está de ".periodo().", patrão {$args['user']}"));
 }
 
 function boa_noite($args = array())
@@ -107,7 +107,7 @@ function boa_noite($args = array())
         enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true, 'text' => "Boa noite, patrão {$args['user']}."));
         return;
     }
-    enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true, 'text' => "Mas está de {periodo()}, patrão {$args['user']}"));
+    enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true, 'text' => "Mas está de ".periodo().", patrão {$args['user']}"));
 }
 
 /**
