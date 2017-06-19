@@ -164,7 +164,7 @@ function tempo_em($args = array())
     (isset($temp['main']['temp']) and isset($temp['sys']['country']) and $temp['sys']['country'] == "BR") ?
         enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true,
             'text' => "Patrão {$args['user']}, o tempo em " . $city . 
-                " está com {$t[$temp['main']['description']]}, a temperatura é de " .
+                " está com {$t[$temp['weather']['description']]}, a temperatura é de " .
                 $temp['main']['temp'] ."°C, a humidade " . $temp['main']['humidity'] . '%, e a velocidade do vento é de ' . $temp['wind']['speed'].'m/s.'
         )) :
         enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true,
