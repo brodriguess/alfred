@@ -121,6 +121,28 @@ function boa_noite($args = array())
     enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true, 'text' => "Mas está de ".periodo().", patrão {$args['user']}"));
 }
 
+function hora($args = array())
+{
+    $hora = date("H:i:s");
+    $arrayMensagem = array(
+        "Patrão {$args['user']}, agora são {$hora}",
+        "São {$hora}, patrão {$args['user']}",
+        "Claro! Agora são {$hora}, patrão {$args['user']}"
+    );
+    enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true, 'text' => $arrayMensagem[array_rand($arrayMensagem, 1)]));
+}
+
+function data($args = array())
+{
+    $data = date("d/m/Y");
+    $arrayMensagem = array(
+                "Patrão {$args['user']}, hoje é dia {$data}",
+                "É dia {$data}, patrão {$args['user']}",
+                "Dia {$data}, patrão {$args['user']}"
+    );
+    enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true, 'text' => $arrayMensagem[array_rand($arrayMensagem, 1)]));
+}
+
 /**
  * PREVISÃO DO TEMPO (API)
  **/
