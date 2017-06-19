@@ -135,10 +135,6 @@ function processaMensagem($message, $alfred) {
                 "BotMordomo! Legal né?"
             );
             $mensagem = $arrayMensagem[array_rand($arrayMensagem, 1)];
-        } else if (strpos(strtolower($msg), 'boa noite') !== false) {
-            $mensagem = ($periodo == 'noite') ? "Boa noite, patrão {$user}." : "Mas está de {$periodo}, patrão {$user}";
-        } else if (strpos(strtolower($msg), 'boa tarde') !== false) {
-            $mensagem = ($periodo == 'tarde') ? "Boa tarde, patrão {$user}." : "Mas está de {$periodo}, patrão {$user}";
         } else if (strpos(strtolower($msg), 'melhor bot') !== false) {
             $arrayMensagem = array(
                 "Sou eu! Você conhece outro?",
@@ -146,14 +142,6 @@ function processaMensagem($message, $alfred) {
                 "Quem você acha?! Eu"
             );
             $mensagem = $arrayMensagem[array_rand($arrayMensagem, 1)];
-        } else if (strpos(strtolower($msg), 'tempo em') !== false or strpos(strtolower($msg), 'tempo para') !== false) {
-            /*
-             * PREVISÃO DO TEMPO (API)
-             */
-            $txt = (strpos(strtolower($msg), 'tempo em') !== false) ? "em" : "para";
-            $city = preg_replace('/.*' . $txt . ' ([^<]*).*/', '$1', $msg);
-            $temp = json_decode(getPage('http://api.openweathermap.org/data/2.5/weather?appid=e18cec2f10e6363e05aa8c43b4ae662a&units=metric&q=' . $city . ',br'), true);
-            $mensagem = (isset($temp['main']['temp']) and isset($temp['sys']['country']) and $temp['sys']['country'] == "BR") ? "Patrão {$user}, a temperatura em " . $city . " está " . $temp['main']['temp'] . " °C, a humidade está " . $temp['main']['humidity'] . ', e a velocidade do vento está ' . $temp['wind']['speed']: "Desculpe patrão {$user}, não sei a onde fica essa cidade";
         }
         else if ($intent[0] != '') {
             $mensagem = "Não entendi, patrão {$user}.";
@@ -165,6 +153,14 @@ function processaMensagem($message, $alfred) {
         
         if (strpos(strtolower($msg), 'bom dia') !== false) {
             bom_dia(array('destino' => $destino, 'user' => $user));
+        }
+        
+        if (strpos(strtolower($msg), 'boa tarde') !== false) {
+            boa_tarde(array('destino' => $destino, 'user' => $user));
+        }
+        
+        if (strpos(strtolower($msg), 'boa noite') !== false) {
+            boa_noite(array('destino' => $destino, 'user' => $user));
         }
         
         if (strpos(strtolower($msg), 'nacionalidade') !== false) {
@@ -181,6 +177,10 @@ function processaMensagem($message, $alfred) {
         
         if (strpos(strtolower($msg), 'manda nude') !== false or strpos(strtolower($msg), 'nude') !== false or strpos(strtolower($msg), 'nudes') !== false) {
             manda_nude(array('destino' => $destino));
+        }
+        
+        if (strpos(strtolower($msg), 'tempo em') !== false or strpos(strtolower($msg), 'tempo para') !== false) {
+            tempo_em(array('destino' => $destino, 'user' => $user));
         }
         
     }
