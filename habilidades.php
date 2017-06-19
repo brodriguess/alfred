@@ -148,15 +148,24 @@ function data($args = array())
  **/
 function tempo_em($args = array())
 {
+    $t = array(
+        'broken clouds' => 'nuvens quebradas',
+        'moderate rain' => 'chuva moderada',
+        'few clouds' => 'poucas nuvens',
+        'sky is clear' => 'céu limpo',
+        'overcast clouds' => 'nuvens nubladas',
+        'scattered clouds' => 'nuvens dispersas',
+    );
+    
     $txt = (strpos(strtolower($args['msg']), 'tempo em') !== false) ? "em" : "para";
     $city = preg_replace('/.*' . $txt . ' ([^<]*).*/', '$1', $args['msg']);
     $temp = json_decode(getPage('http://api.openweathermap.org/data/2.5/weather?appid=e18cec2f10e6363e05aa8c43b4ae662a&units=metric&q=' . $city . ',br'), true);
     
     (isset($temp['main']['temp']) and isset($temp['sys']['country']) and $temp['sys']['country'] == "BR") ?
         enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true,
-            'text' => "Patrão {$args['user']}, a temperatura em " .
-                $city . " estar " . $temp['main']['temp'] . "°C, a humidade " .
-                $temp['main']['humidity'] . '%, e a velocidade do vento é de ' . $temp['wind']['speed'].'km/h.'
+            'text' => "Patrão {$args['user']}, o tempo em " . $city . 
+                " está com {$t[$temp['main']['description']]}, a temperatura é de " .
+                $temp['main']['temp'] ."°C, a humidade " . $temp['main']['humidity'] . '%, e a velocidade do vento é de ' . $temp['wind']['speed'].'m/s.'
         )) :
         enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true,
             'text' => "Desculpe patrão {$args['user']}, não sei a onde fica essa cidade"
