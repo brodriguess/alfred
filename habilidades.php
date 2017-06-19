@@ -148,8 +148,8 @@ function data($args = array())
  **/
 function tempo_em($args = array())
 {
-    $txt = (strpos(strtolower($msg), 'tempo em') !== false) ? "em" : "para";
-    $city = preg_replace('/.*' . $txt . ' ([^<]*).*/', '$1', $msg);
+    $txt = (strpos(strtolower($args['msg']), 'tempo em') !== false) ? "em" : "para";
+    $city = preg_replace('/.*' . $txt . ' ([^<]*).*/', '$1', $args['msg']);
     $temp = json_decode(getPage('http://api.openweathermap.org/data/2.5/weather?appid=e18cec2f10e6363e05aa8c43b4ae662a&units=metric&q=' . $city . ',br'), true);
     
     (isset($temp['main']['temp']) and isset($temp['sys']['country']) and $temp['sys']['country'] == "BR") ?
