@@ -32,13 +32,13 @@ function alfred($args = array())
 
 function dolar($args = array())
 {
-    $moeda = (substr(strtolower($args['intent'][0]), 0, 4) == 'euro') ? 'EUR' : 'USD';
+    $moeda = (strpos(strtolower($args['msg']), 'dolar') !== false) ? "USD" : "EUR";
     $dolar = json_decode(getPage('http://api.promasters.net.br/cotacao/v1/valores?moedas=' . $moeda . '&alt=json'), true);
     if (isset($dolar['valores'][$moeda]['valor'])) {
         $arrayMensagem = array(
-            "Patrão {$args['user']}, o valor do " . $args['intent'][0] . " agora é R$ " . number_format($dolar['valores'][$moeda]['valor'], 2, ',', '.') . ". Tá caro né?",
-            "O valor do " . $args['intent'][0] . " agora é R$ " . number_format($dolar['valores'][$moeda]['valor'], 2, ',', '.') . ". Você vai viajar patrão {$args['user']}?",
-            "O " . $args['intent'][0] . " está em R$ " . number_format($dolar['valores'][$moeda]['valor'], 2, ',', '.') . ". Bora comprar umas muambas patrão {$args['user']}?",
+            "Patrão {$args['user']}, o valor do " . $moeda . " agora é R$ " . number_format($dolar['valores'][$moeda]['valor'], 2, ',', '.') . ". Tá caro né?",
+            //"O valor do " . $moeda . " agora é R$ " . number_format($dolar['valores'][$moeda]['valor'], 2, ',', '.') . ". Você vai viajar patrão {$args['user']}?",
+            //"O " . $moeda . " está em R$ " . number_format($dolar['valores'][$moeda]['valor'], 2, ',', '.') . ". Bora comprar umas muambas patrão {$args['user']}?",
         );
         $mensagem = $arrayMensagem[array_rand($arrayMensagem, 1)];
     }
