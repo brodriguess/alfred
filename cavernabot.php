@@ -35,42 +35,15 @@ function processaMensagem($message, $alfred) {
         //logRobots("log.txt", $msg);
         
         /*
-         * PERIODO
-         */
-         $time = date("H", strtotime('-3 hours'));
-        if ($time < "12") {
-            $periodo = 'manhã';
-        } else if ($time >= "12" && $time < "18") {
-            $periodo = 'tarde';
-        } else if ($time >= "18") {
-            $periodo = 'noite';
-        }
-        /*
          * INTENTS
          */
         $palavras = preg_split("/\s|(?<=\w)(?=[.,:;!?)])|(?<=[.,!()?\x{201C}])/u", removeAC($criterio), -1, PREG_SPLIT_NO_EMPTY);
-        $intent = array_values(preg_grep("(^piada(.)?$|^batman(.)?$|^bat-man(.)?$|^profiss(a|ã)o(.)?$|^futebol(.)?$|^time(.)?$|^raiz(.)?$|^quadrada(.)?$|^d(o|ó|ó)lar(.)?$|^euro(.)?$|^hora(.)?$|^data(.)?$|^alfred(.)?$)", $palavras));
+        $intent = array_values(preg_grep("(^batman(.)?$|^bat-man(.)?$|^profiss(a|ã)o(.)?$|^futebol(.)?$|^time(.)?$|^raiz(.)?$|^quadrada(.)?$|^d(o|ó|ó)lar(.)?$|^euro(.)?$|^alfred(.)?$)", $palavras));
 
         /*
          * AÇÕES
          */
-        if (substr($intent[0], 0, 5) == 'piada') {
-            /*
-             * PIADAS DINAMICAS 
-             */
-            if (strpos(strtolower(removeAC($msg)), "nao") !== false or strpos(strtolower(removeAC($msg)), "não") !== false) {
-                $arrayMensagem = array(
-                    "OK patrão {$user}, não vou contar",
-                    "Claro patrão {$user}, se precisar de alguma coisa me avise",
-                    "Hum, não está gostando das minhas piadas?! Desculpe patrão {$user}"
-                );
-                $mensagem = $arrayMensagem[array_rand($arrayMensagem, 1)];
-            } else {
-                $return = getPage('http://aspiadas.com/randomjoke.php');
-                preg_match_all('/<p>(([^.]|.)*?)<\/p>/', str_replace("<br />", "", utf8_encode($return)), $matches);
-                $mensagem = (isset($matches[1][0])) ? $matches[1][0] : "Desculpe patrão {$user}, hoje não estou conseguindo contar piadas...";
-            }
-        } else if (substr(strtolower($intent[0]), 0, 4) == 'euro' || substr(strtolower($intent[0]), 0, 5) == 'dolar') {
+        if (substr(strtolower($intent[0]), 0, 4) == 'euro' || substr(strtolower($intent[0]), 0, 5) == 'dolar') {
             /*
              * COTACAO DO DOLAR
              */
@@ -113,9 +86,12 @@ function processaMensagem($message, $alfred) {
                 "BotMordomo! Legal né?"
             );
             $mensagem = $arrayMensagem[array_rand($arrayMensagem, 1)];
-        } else if ($intent[0] != '') {
+        }
+        /*
+        else if ($intent[0] != '') {
             $mensagem = "Não entendi, patrão {$user}.";
         }
+        */
         
         if (strpos(strtolower($msg)) == 'alfred') {
             alfred(array('destino' => $destino));
@@ -163,6 +139,10 @@ function processaMensagem($message, $alfred) {
         
         if (strpos(strtolower($msg), 'tempo em') !== false or strpos(strtolower($msg), 'tempo para') !== false) {
             tempo_em(array('destino' => $destino, 'user' => $user));
+        }
+        
+        if (strpos(strtolower($msg), 'piada')) {
+            piada(array('destino' => $destino, 'user' => $user));
         }
         
     }
