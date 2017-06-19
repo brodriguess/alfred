@@ -135,21 +135,17 @@ function processaMensagem($message, $alfred) {
                 "BotMordomo! Legal né?"
             );
             $mensagem = $arrayMensagem[array_rand($arrayMensagem, 1)];
-        } else if (strpos(strtolower($msg), 'melhor bot') !== false) {
-            $arrayMensagem = array(
-                "Sou eu! Você conhece outro?",
-                "BotMordomo! :)",
-                "Quem você acha?! Eu"
-            );
-            $mensagem = $arrayMensagem[array_rand($arrayMensagem, 1)];
-        }
-        else if ($intent[0] != '') {
+        } else if ($intent[0] != '') {
             $mensagem = "Não entendi, patrão {$user}.";
         }
         
         if (strpos(strtolower($msg)) == 'alfred') {
             alfred(array('destino' => $destino));
         } 
+        
+        if (strpos(strtolower($msg), 'melhor bot') !== false) {
+            melhor_bot(array('destino' => $destino));
+        }
         
         if (strpos(strtolower($msg), 'bom dia') !== false) {
             bom_dia(array('destino' => $destino, 'user' => $user));
