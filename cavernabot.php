@@ -43,23 +43,7 @@ function processaMensagem($message, $alfred) {
         /*
          * AÇÕES
          */
-        if (substr(strtolower($intent[0]), 0, 4) == 'euro' || substr(strtolower($intent[0]), 0, 5) == 'dolar') {
-            /*
-             * COTACAO DO DOLAR
-             */
-            $moeda = (substr(strtolower($intent[0]), 0, 4) == 'euro') ? 'EUR' : 'USD';
-            $dolar = json_decode(getPage('http://api.promasters.net.br/cotacao/v1/valores?moedas=' . $moeda . '&alt=json'), true);
-            if (isset($dolar['valores'][$moeda]['valor'])) {
-                $arrayMensagem = array(
-                    "Patrão {$user}, o valor do " . $intent[0] . " agora é R$ " . number_format($dolar['valores'][$moeda]['valor'], 2, ',', '.') . ". Tá caro né?",
-                    "O valor do " . $intent[0] . " agora é R$ " . number_format($dolar['valores'][$moeda]['valor'], 2, ',', '.') . ". Você vai viajar patrão {$user}?",
-                    "O " . $intent[0] . " está em R$ " . number_format($dolar['valores'][$moeda]['valor'], 2, ',', '.') . ". Bora comprar umas muambas patrão {$user}?",
-                );
-                $mensagem = $arrayMensagem[array_rand($arrayMensagem, 1)];
-            } else {
-                $mensagem = "Desculpe patrão {$user}, ainda não li o jornal hoje!";
-            }
-        } else if (substr(strtolower($intent[0]), 0, 6) == 'batman' || substr($intent[0], 0, 7) == 'bat-man') {
+        if (substr(strtolower($intent[0]), 0, 6) == 'batman' || substr($intent[0], 0, 7) == 'bat-man') {
             /*
              * BATMAN
              */
@@ -96,6 +80,10 @@ function processaMensagem($message, $alfred) {
         if (strpos(strtolower($msg)) == 'alfred') {
             alfred(array('destino' => $destino));
         } 
+        
+        if (substr(strtolower($intent[0]), 0, 4) == 'euro' || substr(strtolower($intent[0]), 0, 5) == 'dolar') {
+            dolar(array('intent' => $intent, 'destino' => $destino, 'user' => $user));
+        }
         
         if (strpos(strtolower($msg), 'melhor bot') !== false) {
             melhor_bot(array('destino' => $destino));
