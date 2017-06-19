@@ -113,11 +113,12 @@ function processaMensagem($message, $alfred) {
             boa_noite(array('destino' => $destino, 'user' => $user));
         }
         
-        if (substr($intent[0], 0, 4) == 'hora') {
+        
+        if (strpos(strtolower($msg), 'hora') !== false) {
             hora(array('destino' => $destino, 'user' => $user));
         }
         
-        if (substr($intent[0], 0, 4) == 'data') {
+        if (strpos(strtolower($msg), 'data') !== false) {
             data(array('destino' => $destino, 'user' => $user));
         }
         
