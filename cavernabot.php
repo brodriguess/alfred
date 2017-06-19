@@ -81,8 +81,8 @@ function processaMensagem($message, $alfred) {
             alfred(array('destino' => $destino));
         } 
         
-        if (substr(strtolower($intent[0]), 0, 4) == 'euro' || substr(strtolower($intent[0]), 0, 5) == 'dolar') {
-            dolar(array('intent' => $intent, 'destino' => $destino, 'user' => $user));
+        if (strpos(strtolower($msg), 'euro') !== false or strpos(strtolower($msg), 'dolar') !== false) {
+            dolar(array('msg' => $msg, 'destino' => $destino, 'user' => $user));
         }
         
         if (strpos(strtolower($msg), 'melhor bot') !== false) {
