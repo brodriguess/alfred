@@ -37,7 +37,7 @@ function processaMensagem($message, $alfred) {
         /*
          * INTENTS
          */
-        $palavras = preg_split("/\s|(?<=\w)(?=[.,:;!?)])|(?<=[.,!()?\x{201C}])/u", removeAC($criterio), -1, PREG_SPLIT_NO_EMPTY);
+        $palavras = preg_split("/\s|(?<=\w)(?=[.,:;!?)])|(?<=[.,!()?\x{201C}])/u", removeAC($msg), -1, PREG_SPLIT_NO_EMPTY);
         $intent = array_values(preg_grep("(^batman(.)?$|^bat-man(.)?$|^profiss(a|ã)o(.)?$|^futebol(.)?$|^time(.)?$|^raiz(.)?$|^quadrada(.)?$|^d(o|ó|ó)lar(.)?$|^euro(.)?$|^alfred(.)?$)", $palavras));
 
         /*
