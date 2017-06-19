@@ -1,6 +1,6 @@
 # Alfred
 
-Olá, esse é o repositório do Alfred, o bot que os membros do grupo @BotCaverna do Telegram está criando, para fins de aprendizado. Como o pessoal diz, lá você pode falar de assuntos relacionados a: ChatBots, PLN, IA, Facebook Messenger, Slack, Telegram...
+Olá, esse é o repositório do Alfred, o bot que os membros do grupo @BotCaverna do Telegram estão criando, para fins de aprendizado. Como o pessoal diz, lá você pode falar de assuntos relacionados a: ChatBots, PLN, IA, Facebook Messenger, Slack, Telegram...
 
 ### Como falar com o Alfred?
 Para falar com o Alfred você deve colocar a palavra "Alfred" no início do texto. Exemplo:
