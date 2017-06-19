@@ -20,6 +20,7 @@ function alfred($args = array())
         "Pois não, patrão {$args['user']}.",
         "Estou aqui, patrão {$args['user']}.",
         "Pode falar, patrão {$args['user']}.",
+        "Ao seu dispor, patrão {$args['user']}.",
     );
     
     if ($intent[0] != '') {
