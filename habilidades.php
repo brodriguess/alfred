@@ -30,6 +30,16 @@ function alfred($args = array())
     enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true, 'text' => $arrayMensagem[array_rand($arrayMensagem, 1)]));
 }
 
+function melhor_bot($args = array())
+{
+    $arrayMensagem = array(
+        "Sou eu! Você conhece outro?",
+        "BotMordomo! :)",
+        "Quem você acha?! Eu"
+    );
+    enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true, 'text' => $arrayMensagem[array_rand($arrayMensagem, 1)]));
+}
+
 function nacionalidade($args = array())
 {
     $arrayMensagem = array(
