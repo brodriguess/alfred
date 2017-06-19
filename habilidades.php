@@ -189,7 +189,7 @@ function tempo_em($args = array())
                 $temp['main']['temp'] ."°C, a umidade " . $temp['main']['humidity'] . '%, e a velocidade do vento é de ' . $temp['wind']['speed'].'m/s.'
         )) :
         enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true,
-            'text' => "Me desculpe patrão {$args['user']}, não sei a onde fica essa cidade"
+            'text' => "Me perdoe patrão {$args['user']}, não sei a onde fica essa cidade"
         ));
 }
 
