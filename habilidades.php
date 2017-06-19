@@ -77,8 +77,8 @@ function idade($args = array())
     $arrayMensagem = array(
         "Tenho 74! Eu acho!",
         //"80 anos. E você?",
-        "Acho que 74 anos"
-         "74 anos de muita sabedoria",
+        "Acho que 74 anos",
+         "74 anos de muita sabedoria"
     );
     
     enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true, 'text' => $arrayMensagem[array_rand($arrayMensagem, 1)]));
