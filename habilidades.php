@@ -66,8 +66,8 @@ function nacionalidade($args = array())
     $arrayMensagem = array(
         "Sou Brasileiro!",
         //"Brasileiro e você?",
-        "Brasileiro!"
-        "Brazilian boy",
+        "Brasileiro!",
+        "Brazilian boy"
     );
     
     enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true, 'text' => $arrayMensagem[array_rand($arrayMensagem, 1)]));
