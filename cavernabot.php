@@ -136,6 +136,10 @@ function processaMensagem($message, $alfred) {
             piada(array('destino' => $destino, 'user' => $user));
         }
         
+        if (strpos(strtolower($msg), 'bitcoin')) {
+            bitcoin(array('destino' => $destino, 'user' => $user));
+        }
+        
     }
     $replymarkup = false;
     if (!empty($image)) {
