@@ -222,9 +222,10 @@ function piada($args = array())
 
 function bitcoin($args = array())
 {
+    $bitcoin = json_encode(file_get_contents('https://blockchain.info/pt/ticker'));
     enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true,
         'text' => "Patrão {$args['user']}, esta é a cotação do bitcoin neste instante:\n".
-            "Dólar: ".file_get_contents('https://blockchain.info/pt/ticker')
+            "Dólar: ".$bitcoin->USD->sell
     ));
     /*
     $bitcoin = json_decode(file_get_contents('https://blockchain.info/pt/ticker'));
