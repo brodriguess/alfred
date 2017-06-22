@@ -81,11 +81,13 @@ function processaMensagem($message, $alfred) {
             alfred(array('destino' => $destino));
         } 
         
-        /*
-        if (strpos(strtolower($msg), 'euro') !== false or strpos(strtolower($msg), 'dolar') !== false) {
+        if (strpos(strtolower($msg), 'dolar') !== false) {
             dolar(array('msg' => $msg, 'destino' => $destino, 'user' => $user));
         }
-        */
+        
+        if (strpos(strtolower($msg), 'euro') !== false) {
+            euro(array('msg' => $msg, 'destino' => $destino, 'user' => $user));
+        }
         
         if (strpos(strtolower($msg), 'melhor bot') !== false) {
             melhor_bot(array('destino' => $destino));
