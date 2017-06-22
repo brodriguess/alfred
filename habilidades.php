@@ -225,8 +225,8 @@ function bitcoin($args = array())
     $bitcoin = json_decode(file_get_contents('https://blockchain.info/pt/ticker'));
     enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true,
         'text' => "Patrão {$args['user']}, esta é a cotação do bitcoin neste instante:\n".
-            $bitcoin->USD->symbol.' '.$bitcoin->USD->sell."\n".
-            $bitcoin->EUR->symbol.' '.$bitcoin->EUR->sell.'\n'.
+            $bitcoin->USD->symbol.' '.$bitcoin->USD->sell.", ".
+            $bitcoin->EUR->symbol.' '.$bitcoin->EUR->sell.', '.
             $bitcoin->BRL->symbol.' '.$bitcoin->BRL->sell
     ));
 }
