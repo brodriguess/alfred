@@ -81,7 +81,7 @@ function processaMensagem($message, $alfred) {
             alfred(array('destino' => $destino));
         } 
         
-        if (strpos(strtolower($msg), 'dolar') !== false) {
+        if (strpos(strtolower($msg), 'dolar') !== false or strpos(strtolower($msg), 'dólar') !== false) {
             dolar(array('msg' => $msg, 'destino' => $destino, 'user' => $user));
         }
         
@@ -104,7 +104,6 @@ function processaMensagem($message, $alfred) {
         if (strpos(strtolower($msg), 'boa noite') !== false) {
             boa_noite(array('destino' => $destino, 'user' => $user));
         }
-        
         
         if (strpos(strtolower($msg), 'hora') !== false) {
             hora(array('destino' => $destino, 'user' => $user));
