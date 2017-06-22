@@ -81,7 +81,7 @@ function processaMensagem($message, $alfred) {
             alfred(array('destino' => $destino));
         } 
         
-        if (strpos(strtolower($msg), 'dolar') !== false or strpos(strtolower($msg), 'dólar') !== false) {
+        if (strpos(strtolower($msg), 'dolar') || strpos(strtolower($msg), 'dólar')) {
             dolar(array('destino' => $destino, 'user' => $user));
         }
         
