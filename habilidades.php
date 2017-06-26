@@ -209,7 +209,7 @@ function tempo_em($args = array())
         
         enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true,
             'text' => "Patrão {$args['user']}, o tempo em " . $city . 
-                " está com {$tempo}, a temperatura é de " .
+                " está com {$temp['weather'][0]['description']}, a temperatura é de " .
                 $temp['main']['temp'] ."°C, a umidade " . $temp['main']['humidity'] . '%, e a velocidade do vento é de ' . $temp['wind']['speed'].'m/s.'
         ));
         return;
