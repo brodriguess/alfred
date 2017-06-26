@@ -11,6 +11,8 @@ function habilidades()
         'bom_dia',
         'boa_tarde',
         'boa_noite',
+        'tempo_em',
+        'bitcoin'
     ];
 }
 
@@ -107,7 +109,7 @@ function repositorio($args = array())
 {
     $arrayMensagem = array(
         "Patrão {$user}, você pode me programar aqui https://github.com/brodriguess/alfred",
-        "Aqui está patrão {$user}, escreve aqui https://github.com/brodriguess/alfred"
+        "Aqui está patrão {$user}, me programe aqui https://github.com/brodriguess/alfred"
     );
     
     enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true, 'text' => $arrayMensagem[array_rand($arrayMensagem, 1)]));
@@ -127,11 +129,11 @@ date_default_timezone_set('America/Bahia');
 
 function periodo()
 {
-    if (date('H') >= 0 && date('H') < 12)
+    if (date('H') > 5 && date('H') < 12)
         return 'manhã';
     if (date('H') >= 12 && date('H') < 18)
         return 'tarde';
-    if (date('H') >= 18 && date('H') <= 23)
+    if ((date('H') >= 18 && date('H') <= 23) || (date('H') >= 0 && date('H') <= 5))
         return 'noite';
 }
 
@@ -202,15 +204,21 @@ function tempo_em($args = array())
     $city = preg_replace('/.*' . $txt . ' ([^<]*).*/', '$1', $args['msg']);
     $temp = json_decode(getPage('http://api.openweathermap.org/data/2.5/weather?appid=e18cec2f10e6363e05aa8c43b4ae662a&units=metric&q=' . $city . ',br'), true);
     
-    (isset($temp['main']['temp']) and isset($temp['sys']['country']) and $temp['sys']['country'] == "BR") ?
+    if (isset($temp['main']['temp']) and isset($temp['sys']['country']) and $temp['sys']['country'] == "BR")) {
+        $tempo = in_array($temp->weather[0]->description, $t) ? $t[$temp->weather[0]->description] : $temp->weather[0]->description;
+        
         enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true,
             'text' => "Patrão {$args['user']}, o tempo em " . $city . 
-                " está com {$t[$temp->weather[0]->description]}, a temperatura é de " .
+                " está com {$tempo}, a temperatura é de " .
                 $temp['main']['temp'] ."°C, a umidade " . $temp['main']['humidity'] . '%, e a velocidade do vento é de ' . $temp['wind']['speed'].'m/s.'
-        )) :
-        enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true,
-            'text' => "Me perdoe patrão {$args['user']}, não sei a onde fica essa cidade"
         ));
+        return;
+    }
+    
+    enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true,
+        'text' => "Me perdoe patrão {$args['user']}, não sei a onde fica essa cidade"
+    ));
+    
 }
 
 function piada($args = array())
