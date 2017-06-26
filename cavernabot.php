@@ -28,55 +28,11 @@ function processaMensagem($message, $alfred) {
      * ATIVANDO BOT
      */
     if ($alfred == true) {
-
-        /*
-         * SALVANDO O LOG
-         */
-        //logRobots("log.txt", $msg);
         
-        /*
-         * INTENTS
-         */
-        $palavras = preg_split("/\s|(?<=\w)(?=[.,:;!?)])|(?<=[.,!()?\x{201C}])/u", removeAC($msg), -1, PREG_SPLIT_NO_EMPTY);
-        $intent = array_values(preg_grep("(^batman(.)?$|^bat-man(.)?$|^profiss(a|ã)o(.)?$|^futebol(.)?$|^time(.)?$|^raiz(.)?$|^quadrada(.)?$|^alfred(.)?$)", $palavras));
-
         /*
          * AÇÕES
          */
-        if (substr(strtolower($intent[0]), 0, 6) == 'batman' || substr($intent[0], 0, 7) == 'bat-man') {
-            /*
-             * BATMAN
-             */
-            $arrayMensagem = array(
-                "Não conheço nenhum Batman. Apenas trabalho aqui.",
-                "Quem é o Batman?! Não conheço.",
-                "Não sei patrão {$user}."
-            );
-            $mensagem = $arrayMensagem[array_rand($arrayMensagem, 1)];
-        } else if (substr(strtolower($intent[0]), 0, 4) == 'time' || substr($intent[0], 0, 7) == 'futebol') {
-            $arrayMensagem = array(
-                "Não curto futebol, mas gosto do Gotham F.C.",
-                "Gotham F.C.",
-                "Gotham F.C. e você ?"
-            );
-            $mensagem = $arrayMensagem[array_rand($arrayMensagem, 1)];
-        } else if (substr(strtolower($intent[0]), 0, 4) == 'raiz' || substr($intent[1], 0, 7) == 'quadrada') {
-            $numero = array_values(preg_grep("/^[0-9]+(.)?$/", $palavras));
-            $mensagem = "A raiz quadrada de " . $numero[0] . " é " . sqrt($numero[0]);
-        } else if (substr(strtolower(removeAC($intent[0]), 0, 9)) == 'profissão') {
-            $arrayMensagem = array(
-                "Sou BotMordomo",
-                "BotMordomo e você?",
-                "BotMordomo! Legal né?"
-            );
-            $mensagem = $arrayMensagem[array_rand($arrayMensagem, 1)];
-        }
-        /*
-        else if ($intent[0] != '') {
-            $mensagem = "Não entendi, patrão {$user}.";
-        }
-        */
-        
+ 
         if (strpos(strtolower($msg)) == 'alfred') {
             alfred(array('destino' => $destino));
         } 
@@ -194,7 +150,6 @@ function logRobots($path, $message) {
 /*
  * FUNCAO ENVIAR RESPOSTA
  */
-
 function enviaResposta($metodo, $parametros) {
     $opcoes = array(
         'http' => array(
@@ -213,12 +168,7 @@ function enviaResposta($metodo, $parametros) {
  */
 $update_response = file_get_contents("php://input");
 $update = json_decode($update_response, true);
-/*
- * VERIFICA SE FOI SOLICITADO CALLBACK QUERY OU REQUISICAO NORMAL
- */
-if (isset($update['callback_query'])) {
-    processaCallbackQuery($update['callback_query']);
-}
+
 /*
  * ATIVANDO O BOT
  */
@@ -226,6 +176,9 @@ $alfred = (strpos(strtolower($update['message']['text']), strtolower('alfred')) 
 if (isset($update['message']['text']) && (substr($update['message']['text'], 0, 1) == '/' || $alfred/* substr(strtolower($update['message']['text']),0,6) == 'alfred' */)) {
     processaMensagem($update['message'], $alfred);
 }
+/*
+ * WELCOME
+ */
 if (isset($update['message']['new_chat_member'])) {
     enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $update['message']['chat']['id'], 'disable_web_page_preview' => true, 'text' => "Seja bem-vindo, patrão <b>{$update['message']['new_chat_member']['first_name']}</b>!"));
 }
