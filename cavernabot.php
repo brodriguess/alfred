@@ -227,7 +227,7 @@ if (isset($update['message']['text']) && (substr($update['message']['text'], 0, 
     processaMensagem($update['message'], $alfred);
 }
 if (isset($update['message']['new_chat_member'])) {
-    enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $update['message']['chat']['id'], 'disable_web_page_preview' => true, 'text' => "Seja bem-vindo, patrão <b>{$update['message']['new_chat_member']['first_name']}</b> sinta-se a vontade. Aqui você pode falar de assuntos relacionados a: ChatBots, PLN, IA, Facebook Messenger, Slack, Telegram...\nCríticas e sugestões serão sempre bem vindas e faz a comunidade evoluir. Qualquer dúvida é só falar."));
+    enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $update['message']['chat']['id'], 'disable_web_page_preview' => true, 'text' => "Seja bem-vindo, patrão <b>{$update['message']['new_chat_member']['first_name']}</b> sinta-se a vontade."));
 }
 /*
  * MENSAGEM PARA SITE
