@@ -265,9 +265,9 @@ function megasena($args = array())
 	if($megasena['resultado_completo'] == 1){
 		$ganhadores = (isset($megasena['concurso']['premiacao']['sena']['ganhadores']) and $megasena['concurso']['premiacao']['sena']['ganhadores'] > 0) ?  " teve {$megasena['concurso']['premiacao']['sena']['ganhadores']} ganhadore(s). O Valor pago foi de R$ {$megasena['concurso']['premiacao']['sena']['valor_pago']}." : " não teve nenhum ganhador.";
 		enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true,
-			'text' => "Patrão {$args['user']}, o concurso {$megasena['concurso']['numero']} realizado no dia {$megasena['concurso']['data']} {$ganhadores}.\n\n".
-				"Os números sorteados foram ".implode(",", $megasena['concurso']['dezenas']).".\n\n".
-				"O próximo concurso será realizado dia {$megasena['proximo_concurso']['data']} com valor acumulado estimado em R$ {$megasena['proximo_concurso']['valor_estimado']}.\n\n".
+			'text' => "Patrão {$args['user']}, o concurso {$megasena['concurso']['numero']} realizado no dia {$megasena['concurso']['data']} {$ganhadores}.\n".
+				"Os números sorteados foram ".implode(",", $megasena['concurso']['dezenas']).".\n".
+				"O próximo concurso será realizado dia {$megasena['proximo_concurso']['data']} com valor acumulado estimado em R$ {$megasena['proximo_concurso']['valor_estimado']}.\n".
 				"A Mega da Virada está acumulada em R$ {$megasena['mega_virada_valor_acumulado']}."
 		));
 		return;
