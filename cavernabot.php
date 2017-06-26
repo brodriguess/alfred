@@ -227,7 +227,7 @@ if (isset($update['message']['text']) && (substr($update['message']['text'], 0, 
     processaMensagem($update['message'], $alfred);
 }
 if (isset($update['message']['new_chat_member'])) {
-    enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $update['message']['chat']['id'], 'disable_web_page_preview' => true, 'text' => "Seja bem-vindo, patrão <b>{$update['message']['new_chat_member']['first_name']}</b> sinta-se a vontade."));
+    enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $update['message']['chat']['id'], 'disable_web_page_preview' => true, 'text' => "Seja bem-vindo, patrão <b>{$update['message']['new_chat_member']['first_name']}</b>!"));
 }
 /*
  * MENSAGEM PARA SITE
