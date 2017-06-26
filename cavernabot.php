@@ -141,7 +141,7 @@ function processaMensagem($message, $alfred) {
             bitcoin(array('destino' => $destino, 'user' => $user));
         }
         
-        if (strpos(strtolower($msg), 'megasena')) {
+        if (strpos(strtolower($msg), 'megasena') || strpos(strtolower($msg), 'mega sena')) {
             megasena(array('destino' => $destino, 'user' => $user));
         }
         
