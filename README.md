@@ -16,7 +16,7 @@ Da mesma forma, o Alfred responde a algumas outras palavras (ou expressões) com
  - boa noite
  - bitcoin
  - dólar
- - euro (parece estar bugado)
+ - euro
  - piada
  - nacionalidade
  - idade
