@@ -81,7 +81,7 @@ function processaMensagem($message, $alfred) {
             alfred(array('destino' => $destino));
         } 
         
-        if (strpos(strtolower($msg), 'dolar') || strpos(strtolower($msg), 'dólar')) {
+        if (strpos(strtolower($msg), 'dolar') !== false || strpos(strtolower($msg), 'dólar') !== false) {
             dolar(array('destino' => $destino, 'user' => $user));
         }
         
@@ -133,15 +133,15 @@ function processaMensagem($message, $alfred) {
             tempo_em(array('msg' => $msg, 'destino' => $destino, 'user' => $user));
         }
         
-        if (strpos(strtolower($msg), 'piada')) {
+        if (strpos(strtolower($msg), 'piada') !== false) {
             piada(array('destino' => $destino, 'user' => $user));
         }
         
-        if (strpos(strtolower($msg), 'bitcoin')) {
+        if (strpos(strtolower($msg), 'bitcoin') !== false) {
             bitcoin(array('destino' => $destino, 'user' => $user));
         }
         
-        if (strpos(strtolower($msg), 'megasena') || strpos(strtolower($msg), 'mega sena')) {
+        if (strpos(strtolower($msg), 'megasena') !== false || strpos(strtolower($msg), 'mega sena') !== false) {
             megasena(array('destino' => $destino, 'user' => $user));
         }
         
