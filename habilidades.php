@@ -265,9 +265,9 @@ function megasena($args = array())
 	if($megasena['resultado_completo'] == 1){
 		enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true,
 			'text' => "Patrão {$args['user']}, o concurso {$megasena['concurso']['numero']} realizado no dia {$megasena['concurso']['data']} {$ganhadores}.\n".
-					  "Os números sorteados foram ".implode(",", $megasena['concurso']['dezenas']).".\n".
-					  "O próximo concurso será realizado dia {$megasena['proximo_concurso']['data']} com valor acumulado estimado em R$ {$megasena['proximo_concurso']['valor_estimado']}.\n".
-					  "A Mega da Virada está acumulada em R$ {$megasena['mega_virada_valor_acumulado']}."
+				"Os números sorteados foram ".implode(",", $megasena['concurso']['dezenas']).".\n".
+				"O próximo concurso será realizado dia {$megasena['proximo_concurso']['data']} com valor acumulado estimado em R$ {$megasena['proximo_concurso']['valor_estimado']}.\n".
+				"A Mega da Virada está acumulada em R$ {$megasena['mega_virada_valor_acumulado']}."
 		));
 		return;
 	}
