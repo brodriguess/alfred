@@ -13,7 +13,9 @@ function habilidades()
         'boa_noite',
         'tempo_em',
         'bitcoin',
-        'megasena'
+        'megasena',
+	'dolar',
+	'euro'
     ];
 }
 
