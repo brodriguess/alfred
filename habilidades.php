@@ -47,10 +47,9 @@ function dolar($args = array())
 
 function euro($args = array())
 {
-    $euro = json_decode(file_get_contents('http://api.promasters.net.br/cotacao/v1/valores?moedas=EUR&alt=json'));
+    $euro = json_decode(getPage('http://api.promasters.net.br/cotacao/v1/valores?moedas=EUR&alt=json'), true);
     enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true,
-        'text' => "Patrão {$args['user']}, o euro hoje está custando:\n".
-            'R$ '.$euro->valores->EUR->valor
+        'text' => "Patrão {$args['user']}, o euro hoje está custando R$ ".number_format($euro['valores']['EUR']['valor'], 2, ',', '.')
     ));
 }
 
@@ -88,7 +87,6 @@ function nacionalidade($args = array())
 {
     $arrayMensagem = array(
         "Sou Brasileiro!",
-        //"Brasileiro e você?",
         "Brasileiro!",
         "Brazilian boy"
     );
@@ -100,9 +98,8 @@ function idade($args = array())
 {
     $arrayMensagem = array(
         "Tenho 74! Eu acho!",
-        //"74 anos. E você?",
         "Acho que 74 anos",
-         "74 anos de muita sabedoria"
+        "74 anos de muita sabedoria"
     );
     
     enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true, 'text' => $arrayMensagem[array_rand($arrayMensagem, 1)]));
@@ -208,8 +205,6 @@ function tempo_em($args = array())
     $temp = json_decode(getPage('http://api.openweathermap.org/data/2.5/weather?appid=e18cec2f10e6363e05aa8c43b4ae662a&units=metric&q=' . $city . ',br'), true);
     
     if (isset($temp['main']['temp']) and isset($temp['sys']['country']) and ($temp['sys']['country'] == "BR")) {
-        //$tempo = in_array($temp->weather[0]->description, $t) ? $t[$temp->weather[0]->description] : $temp->weather[0]->description;
-        
         enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true,
             'text' => "Patrão {$args['user']}, o tempo em " . $city . 
                 " está com temperatura de " .
@@ -235,18 +230,6 @@ function piada($args = array())
         enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true,
             'text' => "Patrão {$args['user']}, desculpe-me, hoje não estou conseguindo contar piadas..."
         ));
-    
-    /*
-    if (strpos(strtolower(removeAC($msg)), "nao") !== false or strpos(strtolower(removeAC($msg)), "não") !== false) {
-                $arrayMensagem = array(
-                    "OK patrão {$user}, não vou contar",
-                    "Claro patrão {$user}, se precisar de alguma coisa me avise",
-                    "Hum, não está gostando das minhas piadas?! Desculpe patrão {$user}"
-                );
-                $mensagem = $arrayMensagem[array_rand($arrayMensagem, 1)];
-            } else {
-            }
-     */
 }
 
 function bitcoin($args = array())
