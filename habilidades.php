@@ -34,7 +34,7 @@ function alfred($args = array())
     enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true, 'text' => $arrayMensagem[array_rand($arrayMensagem, 1)]));
 }
 
-function dolar()
+function dolar($args = array())
 {
     $dolar = json_decode(file_get_contents('http://api.promasters.net.br/cotacao/v1/valores?moedas=USD&alt=json'));
     enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true,
@@ -43,7 +43,7 @@ function dolar()
     ));
 }
 
-function euro()
+function euro($args = array())
 {
     $euro = json_decode(file_get_contents('http://api.promasters.net.br/cotacao/v1/valores?moedas=EUR&alt=json'));
     enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true,
