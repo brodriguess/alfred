@@ -16,12 +16,13 @@ Da mesma forma, o Alfred responde a algumas outras palavras (ou expressões) com
  - boa noite
  - bitcoin
  - dólar
- - euro
+ - euro (parece estar bugado)
  - piada
  - nacionalidade
  - idade
  - manda nude
  - repositorio
+ - mega sena
 
 Inclusice, você pode mandar uma frase contendo algumas dessas palavras, e o Alfred irá responder todas as palavras que ele identificar.
 
@@ -32,4 +33,10 @@ Aqui no Github tem um Editor de Código em formato web, basta você abrir o arqu
 Teremos as seguinte novidades:
  - Reescrita do Alfred em PHP 5 OO (se não me engano o PHP 7 não foi habilitado no servidor)
  - Interpretação de frases usando alguns algoritmos de Linguagem Natural
+ - Banco (txt) de palavras para melhora de compreensão de texto e criação dinâmica de respostas
+ - ...
+
+### Para a versão (2x) em PHP ...
+Teremos as seguinte novidades:
+ - Integração com o API.ai
  - ...
