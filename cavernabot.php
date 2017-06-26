@@ -141,6 +141,10 @@ function processaMensagem($message, $alfred) {
             bitcoin(array('destino' => $destino, 'user' => $user));
         }
         
+        if (strpos(strtolower($msg), 'megasena')) {
+            megasena(array('destino' => $destino, 'user' => $user));
+        }
+        
     }
     $replymarkup = false;
     if (!empty($image)) {
