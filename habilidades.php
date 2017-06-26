@@ -38,10 +38,9 @@ function alfred($args = array())
 
 function dolar($args = array())
 {
-    $dolar = json_decode(file_get_contents('http://api.promasters.net.br/cotacao/v1/valores?moedas=USD&alt=json'));
+    $dolar = json_decode(getPage('http://api.promasters.net.br/cotacao/v1/valores?moedas=USD&alt=json'), true);
     enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true,
-        'text' => "Patrão {$args['user']}, o dólar hoje está custando:\n".
-            'R$ '.$dolar->valores->USD->valor
+        'text' => "Patrão {$args['user']}, o dólar hoje está custando R$ ".number_format($dolar['valores']['USD']['valor'], 2, ',', '.')
     ));
 }
 
