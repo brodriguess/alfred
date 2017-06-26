@@ -204,7 +204,7 @@ function tempo_em($args = array())
     $city = preg_replace('/.*' . $txt . ' ([^<]*).*/', '$1', $args['msg']);
     $temp = json_decode(getPage('http://api.openweathermap.org/data/2.5/weather?appid=e18cec2f10e6363e05aa8c43b4ae662a&units=metric&q=' . $city . ',br'), true);
     
-    if (isset($temp['main']['temp']) and isset($temp['sys']['country']) and $temp['sys']['country'] == "BR")) {
+    if (isset($temp['main']['temp']) and isset($temp['sys']['country']) and ($temp['sys']['country'] == "BR")) {
         //$tempo = in_array($temp->weather[0]->description, $t) ? $t[$temp->weather[0]->description] : $temp->weather[0]->description;
         
         enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true,
