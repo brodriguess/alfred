@@ -52,26 +52,6 @@ function euro($args = array())
     ));
 }
 
-/*
-function dolar($args = array())
-{
-    $moeda = (strpos(strtolower($args['msg']), 'dolar') !== false) ? "USD" : "EUR";
-    $dolar = json_decode(getPage('http://api.promasters.net.br/cotacao/v1/valores?moedas=' . $moeda . '&alt=json'), true);
-    if (isset($dolar['valores'][$moeda]['valor'])) {
-        $arrayMensagem = array(
-            "Patrão {$args['user']}, o valor do " . $moeda . " agora é R$ " . number_format($dolar['valores'][$moeda]['valor'], 2, ',', '.') . ". Tá caro né?",
-            //"O valor do " . $moeda . " agora é R$ " . number_format($dolar['valores'][$moeda]['valor'], 2, ',', '.') . ". Você vai viajar patrão {$args['user']}?",
-            //"O " . $moeda . " está em R$ " . number_format($dolar['valores'][$moeda]['valor'], 2, ',', '.') . ". Bora comprar umas muambas patrão {$args['user']}?",
-        );
-        $mensagem = $arrayMensagem[array_rand($arrayMensagem, 1)];
-    }
-    else {
-        $mensagem = "Desculpe patrão {$args['user']}, ainda não li o jornal hoje!";
-    }
-    enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true, 'text' => $mensagem, 1)]));
-}
-*/
-
 function melhor_bot($args = array())
 {
     $arrayMensagem = array(
