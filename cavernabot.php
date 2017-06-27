@@ -16,7 +16,7 @@ function processaMensagem($message, $alfred) {
     $private = ($message['chat']['type'] == "private") ? true : false;
     $sintaxe = preg_split("/\s+/", strtolower($msg), 2);
     $comando = substr(str_ireplace("@cavernabot", "", $sintaxe[0]), 1);
-    $criterio = preg_replace('/[`^~\'"]/', null, iconv('UTF-8', 'ASCII//TRANSLIT', ($sintaxe[1]));
+    $criterio = preg_replace('/[`^~\'"]/', null, iconv('UTF-8', 'ASCII//TRANSLIT', $sintaxe[1]));
     $image = null;
     if ($comando == "perguntasf" || $comando == "faq") {
         $mensagem = "<b>O que são ChatBots?</b>\nChatbot (ou chatterbot) é um programa de computador que tenta simular um ser humano na conversação com as pessoas. O objetivo é responder as perguntas de tal forma que as pessoas tenham a impressão de estar conversando com outra pessoa e não com um programa de computador. Após o envio de perguntas em linguagem natural, o programa consulta uma base de conhecimento e em seguida fornece uma resposta que tenta imitar o comportamento humano. (<a href='https://pt.wikipedia.org/wiki/Chatterbot'>Wikipedia</a>) ";
