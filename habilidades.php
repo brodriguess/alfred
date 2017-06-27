@@ -87,8 +87,8 @@ function idade($args = array())
 function repositorio($args = array())
 {
     $arrayMensagem = array(
-        "Patrão {$user}, você pode me programar aqui https://github.com/brodriguess/alfred",
-        "Aqui está patrão {$user}, me programe aqui https://github.com/brodriguess/alfred"
+        "Patrão {$args['user']}, você pode me programar aqui https://github.com/brodriguess/alfred",
+        "Aqui está patrão {$args['user']}, me programe aqui https://github.com/brodriguess/alfred"
     );
     
     enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true, 'text' => $arrayMensagem[array_rand($arrayMensagem, 1)]));
