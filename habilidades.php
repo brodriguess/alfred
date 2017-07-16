@@ -74,7 +74,7 @@ function tempo($args = array())
 
 function piada($args = array())
 {
-    return = json_decode(file_get_contents('http://aspiadas.com/randomjoke.php'));
+    /*return = json_decode(file_get_contents('http://aspiadas.com/randomjoke.php'));
     preg_match_all('/<p>(([^.]|.)*?)<\/p>/', str_replace("<br />", "", utf8_encode($return)), $matches);
     (isset($matches[1][0])) ?
         enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true,
@@ -82,5 +82,5 @@ function piada($args = array())
         )) :
         enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true,
             'text' => "Patrão {$args['user']}, desculpe-me, hoje não estou conseguindo contar piadas..."
-        ));
+        ));*/
 }
