@@ -18,6 +18,12 @@ function processMessage($update, $platform) {
     }else if ($update["result"]["action"] == "piada") {
         $array = piada($update);
         sendMessage($array);
+    }else if ($update["result"]["action"] == "tempo") {
+        $array = tempo($update);
+        sendMessage($array);
+    }else if ($update["result"]["action"] == "bitcoin") {
+        $array = bitcoin($update);
+        sendMessage($array);
     }
 }
 
