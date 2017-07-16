@@ -35,4 +35,4 @@ Quando o Alfred não entender o que disse ele irá responder:
 - etc...
 
 ### Dúvidas
-twitter: @bgastaldi
+@bgastaldi
