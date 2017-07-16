@@ -29,7 +29,7 @@ Esse bot está integrado com o API.AI e através de webhook tem as habilidades:
   
 ### E quando o Alfred não entender?!
 
-Quando o Alfred não souber o que disse ele irá responder:
+Quando o Alfred não entender o que disse ele irá responder:
 - Não entendi patrão.
 - Desculpe patrão, não consegui compreender a sua solicitação.
 - etc...
