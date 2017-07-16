@@ -12,11 +12,11 @@ if (isset($update["result"]["action"])) {
  * PROCESSANDO A MENSAGEM 
  *
 function processMessage($update, $platform) {
-    if ($update["result"]["action"] == "moeda.consulta") {
-        $array = moedaConsulta($update);
+    if ($update["result"]["action"] == "moeda") {
+        $array = moeda($update);
         sendMessage($array);
-    }else if ($update["result"]["action"] == "contar.piada") {
-        $array = contarPiada($update);
+    }else if ($update["result"]["action"] == "piada") {
+        $array = piada($update);
         sendMessage($array);
     }
 }
