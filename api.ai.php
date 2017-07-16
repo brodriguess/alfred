@@ -22,11 +22,9 @@ function processMessage($update, $platform) {
     }
 }
 
-
 /*
  * FUNÇÃO PARA ENVIAR A MENSAGEM
  */
-
 function sendMessage($parameters) {
     echo json_encode($parameters);
 }
