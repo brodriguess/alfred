@@ -34,5 +34,3 @@ Quando o Alfred não souber o que disse ele irá responder:
 - Desculpe patrão, não consegui compreender a sua solicitação.
 - etc...
 
-### Colaboradores
-@bgastaldi
