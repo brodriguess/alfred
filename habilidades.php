@@ -1,27 +1,42 @@
 <?php
 
 
-function moeda($args = array())
+function moeda($update = array())
 {
-    $dolar = json_decode(file_get_contents('http://api.promasters.net.br/cotacao/v1/valores?moedas=USD&alt=json'));
-    enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true,
-        'text' => "Patrão {$args['user']}, o dólar hoje está custando:\n".
-            'R$ '.$dolar->valores->USD->valor
-    ));
+    $mensagem = array();
+    if($update["result"]["parameters"]["moeda"] == "EUR" or $update["result"]["parameters"]["moeda"] == "USD"){
+        $SLG = ($update["result"]["parameters"]["moeda"] == "EUR") ? "EURO" : "DÓLAR";
+        $moeda = json_decode(file_get_contents('http://api.promasters.net.br/cotacao/v1/valores?moedas={$SLG}&alt=json'), true);
+        $mensagem[] = array(
+            "type" => 0,
+            "speech" => "Patrão, o {$SLG} hoje está custando R$ {$moeda['valores'][$update["result"]["parameters"]["moeda"]]['valor']}"
+        );
+    }else{
+        $bitcoin = json_decode(file_get_contents('https://blockchain.info/pt/ticker'), true);
+        $mensagem[] = array(
+            "type" => 0,
+            "speech" => "Patrão, esta é a cotação do bitcoin neste instante\n {$bitcoin['USD']['symbol']} {$bitcoin['USD']['sell']}, {$bitcoin['EUR']['symbol']} {$bitcoin['EUR']['sell']}, {$bitcoin['BRL']['symbol']} {$bitcoin['BRL']['sell']}."
+        );    
+    }
     
-    $euro = json_decode(file_get_contents('http://api.promasters.net.br/cotacao/v1/valores?moedas=EUR&alt=json'));
-    enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true,
-        'text' => "Patrão {$args['user']}, o euro hoje está custando:\n".
-            'R$ '.$euro->valores->EUR->valor
-    ));
+    $mensagem[] = array(
+        "type" => 0,
+        "speech" => "Gostaria de realizar uma nova consulta?",
+    );
     
-    $bitcoin = json_decode(file_get_contents('https://blockchain.info/pt/ticker'));
-    enviaResposta("sendMessage", array('parse_mode' => 'HTML', 'chat_id' => $args['destino'], 'disable_web_page_preview' => true,
-        'text' => "Patrão {$args['user']}, esta é a cotação do bitcoin neste instante:\n".
-            $bitcoin->USD->symbol.' '.$bitcoin->USD->sell.", ".
-            $bitcoin->EUR->symbol.' '.$bitcoin->EUR->sell.', '.
-            $bitcoin->BRL->symbol.' '.$bitcoin->BRL->sell
-    ));
+    return array(
+            "source" => $update["result"]["source"],
+            "speech" => $mensagem[0],
+            "messages" => $mensagem,
+            "displayText" => $mensagem[0],
+            "contextOut" => array(
+                array(
+                    "name" => "ctx-moeda",
+                    "lifespan" => 1,
+                    "parameters" => array()
+                )
+            )
+        );    
 }
 
 /**
