@@ -10,8 +10,29 @@ Esse bot está integrado com o API.AI e através de webhook tem as habilidades:
 - Conta Piadas
 
 ### Como falar com o Alfred?
-- Seja sempre educado.
--- Gostaria de saber a cotação do dolar.
--- Por favor, poderia me informar o dolar?
+- Para cotação do Dolar/Euro/Bitcoin.
+  * Gostaria de saber a cotação do dolar.
+  * Por favor, poderia me informar o dolar?
+  * etc...
 
-Isso funciona para todos os exemplos acima.
+- Para consulta a previsão do tempo
+  * Qual é a previsão do tempo em NomeDaCidade
+  * Poderia me informar a previsão do tempo em NomeDaCidade
+  * Como está o tempo em NomeDaCidade
+  * etc...
+  
+- Para piadas
+  * Poderia me contar uma piada?
+  * Conte uma piada por favor!
+  * Manda uma piada ai.
+  * etc...
+  
+### E quando o Alfred não entender?!
+
+Quando o Alfred não souber o que disse ele irá responder:
+- Não entendi patrão.
+- Desculpe patrão, não consegui compreender a sua solicitação.
+- etc...
+
+### Colaboradores
+@bgastaldi
