@@ -1,23 +1,30 @@
+<?php
+
+require_once("habilidades.php");
+
 /*
  * PROCESSANDO A MENSAGEM 
- * QUE CHEGA DO BOT
  */
 function processMessage($update) {
-    if($update["result"]["action"] == "moeda.cotar"){
-        sendMessage(array(
-            "source" => $update["result"]["source"],
-            "speech" => "..........TEXT HERE..........",
-            "displayText" => ".........TEXT HERE..........",
-            "contextOut" => array()
-        ));
+    if($update["result"]["action"] == "moeda"){
+        $array = moeda($update);
+        sendMessage($array);
+    }else if($update["result"]["action"] == "piada"){
+        $array = piada($update);
+        sendMessage($array);
+    }else if($update["result"]["action"] == "tempo"){
+        $array = tempo($update);
+        sendMessage($array);
     }
 }
+
 /*
  * FUNÇÃO PARA ENVIAR A MENSAGEM
  */
 function sendMessage($parameters) {
     echo json_encode($parameters);
 }
+
 /*
  * PEGANDO A REQUISIÇÃO
  */
