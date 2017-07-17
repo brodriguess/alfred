@@ -2,8 +2,8 @@
 
 Olá, esse é o repositório do Alfred, o bot que os membros do grupo @BotCaverna do Telegram estão criando, para fins de aprendizado. No grupo, você poderá falar de assuntos relacionados a: ChatBots, PLN, IA, Facebook Messenger, Slack, Telegram, Skype e tudo que esteja relacionado com o mundo dos bots. 
 
-### API.AI via Webhook
-Esse bot está integrado com o API.AI e através de webhook tem as habilidades:
+### API.AI
+Esse bot está integrado com o API.AI e possui as habilidades:
 - Consulta a cotação do Dolar/Euro
 - Consulta o cotação do Bitcoin
 - Consulta a previsão do tempo
