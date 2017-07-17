@@ -1,7 +1,7 @@
 /*
  * HABILIDADES
  */
-require 'habilidades.php';
+//require 'habilidades.php';
 
 /*
  * RECEBE UPDATES
