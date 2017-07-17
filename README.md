@@ -28,14 +28,12 @@ Esse bot está integrado com o API.AI e através de webhook tem as habilidades:
   * Manda uma piada ai.
   * etc...
   
-- Para Smalltalk: Assutos sobre o AlfredBot:
+- Para Smalltalk: Assuntos sobre o AlfredBot:
   * Idade
   * Cidade
   * Sexo
   * Salário
   * etc...
-  
-
   
 ### E quando o Alfred não entender?!
 
