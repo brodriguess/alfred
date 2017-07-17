@@ -4,6 +4,12 @@
 require 'habilidades.php';
 
 /*
+ * RECEBE UPDATES
+ */
+$update_response = file_get_contents("php://input");
+$update = json_decode($update_response, true);
+
+/*
  * PEGANDO A MENSAGEM 
  */
 if (isset($update["result"]["action"])) {
@@ -32,10 +38,3 @@ function processMessage($update) {
 function sendMessage($parameters) {
     echo json_encode($parameters);
 }
-
-/*
- * RECEBE UPDATES
- */
-$update_response = file_get_contents("php://input");
-$update = json_decode($update_response, true);
-
