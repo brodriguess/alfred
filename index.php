@@ -7,22 +7,22 @@ require 'habilidades.php';
  * PEGANDO A MENSAGEM 
  */
 if (isset($update["result"]["action"])) {
-    processMessage($update, $platform);
+    processMessage($update);
 }
 
 /*
  * PROCESSANDO A MENSAGEM 
  */
-function processMessage($update, $platform) {
+function processMessage($update) {
     if ($update["result"]["action"] == "moeda") {
         $array = moeda($update);
         sendMessage($array);
     }else if ($update["result"]["action"] == "piada") {
-        $array = piada($update);
-        sendMessage($array);
+        //$array = piada($update);
+        //sendMessage($array);
     }else if ($update["result"]["action"] == "tempo") {
-        $array = tempo($update);
-        sendMessage($array);
+        //$array = tempo($update);
+        //sendMessage($array);
     }
 }
 
