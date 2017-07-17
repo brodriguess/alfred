@@ -65,7 +65,7 @@ function tempo($update = array()) {
         $mensagem[] = array(
             'type' => 0,
             'speech' => 'Me perdoe patrão, não sei a onde fica essa cidade'
-                );
+        );
     }
 
     $mensagem[] = array(
