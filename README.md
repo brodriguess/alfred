@@ -8,6 +8,7 @@ Esse bot está integrado com o API.AI e através de webhook tem as habilidades:
 - Consulta o cotação do Bitcoin
 - Consulta a previsão do tempo
 - Conta Piadas
+- Smalltalk (Conversa fiada :P)
 
 ### Como falar com o Alfred?
 - Para cotação do Dolar/Euro/Bitcoin.
@@ -26,6 +27,15 @@ Esse bot está integrado com o API.AI e através de webhook tem as habilidades:
   * Conte uma piada por favor!
   * Manda uma piada ai.
   * etc...
+  
+- Para Smalltalk: Assutos sobre o AlfredBot:
+  * Idade
+  * Cidade
+  * Sexo
+  * Salário
+  * etc...
+  
+
   
 ### E quando o Alfred não entender?!
 
