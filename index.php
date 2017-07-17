@@ -21,7 +21,13 @@ if (isset($update["result"]["action"])) {
  */
 function processMessage($update) {
     if ($update["result"]["action"] == "moeda") {
-        $array = moeda($update);
+        //$array = moeda($update);
+        $array =  array(
+            "source" => $update["result"]["source"],
+            "speech" => "..........TEXT HERE...........",
+            "displayText" => ".........TEXT HERE...........",
+            "contextOut" => array()
+        );
         sendMessage($array);
     }else if ($update["result"]["action"] == "piada") {
         //$array = piada($update);
