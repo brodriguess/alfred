@@ -24,7 +24,7 @@ function moeda($update = array()) {
         'speech' => 'Gostaria de realizar uma nova consulta?',
     );
 
-    return array(
+    /*return array(
         'source' => $update['result']['source'],
         'speech' => $mensagem[0],
         'messages' => $mensagem,
@@ -36,5 +36,11 @@ function moeda($update = array()) {
                 'parameters' => array()
             )
         )
-    );
+    );*/
+    return array(
+            "source" => $update["result"]["source"],
+            "speech" => "..........TEXT HERE...........",
+            "displayText" => ".........TEXT HERE...........",
+            "contextOut" => array()
+        );
 }
