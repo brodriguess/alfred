@@ -3,7 +3,7 @@
  * QUE CHEGA DO BOT
  */
 function processMessage($update) {
-    if($update["result"]["action"] == "moeda"){
+    if($update["result"]["action"] == "moeda.cotar"){
         sendMessage(array(
             "source" => $update["result"]["source"],
             "speech" => "..........TEXT HERE..........",
