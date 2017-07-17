@@ -1,3 +1,6 @@
+/*
+ * HABILIDADES
+ */
 require 'habilidades.php';
 
 /*
