@@ -3,6 +3,7 @@
  */
 
 function moeda($update = array()) {
+/*
     $mensagem = array();
     if ($update['result']['parameters']['moeda'] == 'EUR' or $update['result']['parameters']['moeda'] == 'USD') {
         $SLG = ($update['result']['parameters']['moeda'] == 'EUR') ? 'EURO' : 'DÓLAR';
@@ -24,7 +25,7 @@ function moeda($update = array()) {
         'speech' => 'Gostaria de realizar uma nova consulta?',
     );
 
-    /*return array(
+    return array(
         'source' => $update['result']['source'],
         'speech' => $mensagem[0],
         'messages' => $mensagem,
