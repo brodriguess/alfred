@@ -3,13 +3,13 @@
  */
 function moeda($update = array())
 {
-    $mensagem = array();
+
     if($update['result']['parameters']['moeda'] == 'EUR' or $update['result']['parameters']['moeda'] == 'USD'){
         $SLG = ($update['result']['parameters']['moeda'] == 'EUR') ? 'EURO' : 'DÓLAR';
         $moeda = json_decode(file_get_contents('http://api.promasters.net.br/cotacao/v1/valores?moedas='.$update['result']['parameters']['moeda'].'&alt=json'), true);
         $mensagem[] = array(
             'type' => 0,
-            'speech' => 'Patrão, o {$SLG} hoje está custando R$ '.$moeda['valores'][$update['result']['parameters']['moeda']]['valor'].'.'
+            'speech' => 'Patrão, o '.$SLG.' hoje está custando R$ '.$moeda['valores'][$update['result']['parameters']['moeda']]['valor'].'.'
         );
     }else{
         $bitcoin = json_decode(file_get_contents('https://blockchain.info/pt/ticker'), true);
