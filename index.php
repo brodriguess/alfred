@@ -6,8 +6,8 @@ function processMessage($update) {
     if($update["result"]["action"] == "moeda"){
         sendMessage(array(
             "source" => $update["result"]["source"],
-            "speech" => "..........TEXT HERE...........",
-            "displayText" => ".........TEXT HERE...........",
+            "speech" => "..........TEXT HERE..........",
+            "displayText" => ".........TEXT HERE..........",
             "contextOut" => array()
         ));
     }
