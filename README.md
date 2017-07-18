@@ -30,9 +30,8 @@ Esse bot está integrado com o API.AI e possui as habilidades:
   
 - Para Smalltalk: Assuntos sobre o AlfredBot:
   * Idade
-  * Cidade
-  * Sexo
-  * Salário
+  * Repositório
+  * Criador
   * etc...
   
 ### E quando o Alfred não entender?!
